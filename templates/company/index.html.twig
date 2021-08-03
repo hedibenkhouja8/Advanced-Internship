@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CompanyController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .cl{color:#485785;}
+</style>
+<div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="sidebar-sticky pt-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active cl" href="/admin-dashboard">
+                <span data-feather="home"></span><i class="fas fa-home"></i>
+               home<span class="sr-only"></span>
+              </a>
+            </li>
+ 
+            <li class="nav-item">
+              <a class="nav-link active cl" href="/company/inventory">
+                <span data-feather="home"></span> <i class="fas fa-running"></i>
+                Inventory <span class="sr-only"></span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link cl" href="/clients">
+                <span data-feather="file"></span><i class="fas fa-users"></i>
+                Storage
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link cl" href="/users">
+                <span data-feather="file"></span><i class="fas fa-user"></i>
+               Actions
+              </a>
+            </li>
+            
+           
+          </ul>
+  
+        </div>
+        <br> <br> <br> <br> <br> <br> <br> 
+      </nav>
+{% endblock %}
