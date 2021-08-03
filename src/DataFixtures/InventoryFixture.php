@@ -17,7 +17,7 @@ for($i=0;$i<10;$i++){
     $inventory->setEquipment($faker->word);
     $inventory->setUser($faker->word);
     $inventory->setLocaation($faker->word);
-    $inventory->setNotes($faker->word);
+    $inventory->setNotes($faker->Text);
     $inventory->setOperatingSystem($faker->word);
     $inventory->setState($faker->word);
     $inventory->setBrand($faker->word);

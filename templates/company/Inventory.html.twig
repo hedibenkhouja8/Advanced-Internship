@@ -2,7 +2,7 @@
 {% block body %}
 <style>
 a{color:black;}
-th{color:#485785}
+th,h2{color:#485785}
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -41,8 +41,12 @@ th{color:#485785}
         </div>
         <br> <br> <br> <br> <br> <br> <br> 
       </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
-      <div class="container">
+     <div class="container">
+     <h2>This is Your Inventory</h2>
+       <a href="{{path("inventory_create")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add Equipement to your inventory</a>
+<br><br>
      <table class="table table-striped table-active container">
+     <br>
   <thead class="thead-type">
     <tr>
       <th scope="col">Equipment</th>
@@ -70,7 +74,7 @@ th{color:#485785}
        <td>{{inventory.Brand}}</td>
       <td>{{inventory.LastScan}}</td>
       <td>{{inventory.LastMaintenance}}</td>
-       <td> <a href="#"><i class="far fa-eye"></i></a>
+       <td> <a href="{{path('inventory_show',{'id':inventory.id})}}"><i class="far fa-eye"></i></a>
           
            <a href="#"><i class="fas fa-edit"></i> </a>
            <a href="#"><i class="fas fa-trash"></i> </a>
