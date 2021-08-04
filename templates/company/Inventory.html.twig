@@ -43,7 +43,7 @@ th,h2{color:#485785}
       </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
      <div class="container">
      <h2>This is Your Inventory</h2>
-       <a href="{{path("inventory_create")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add Equipement to your inventory</a>
+       <a href="{{path("inventory_new")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add Equipement to your inventory</a>
 <br><br>
      <table class="table table-striped table-active container">
      <br>
@@ -76,13 +76,28 @@ th,h2{color:#485785}
       <td>{{inventory.LastMaintenance}}</td>
        <td> <a href="{{path('inventory_show',{'id':inventory.id})}}"><i class="far fa-eye"></i></a>
           
-           <a href="#"><i class="fas fa-edit"></i> </a>
-           <a href="#"><i class="fas fa-trash"></i> </a>
+           <a href="{{path('inventory_edit',{'id':inventory.id})}}" ><i class="fas fa-edit"></i> </a>
+           <a href="{{path('inventory_delete',{'id':inventory.id})}}" onclick="myFunction()" data-id=""{{inventory.id}}><i class="fas fa-trash delete-inventory"></i> </a>
           </td>
     </tr>
    {% endfor %}
   </tbody>
 </table>
+<div class="navigation">
+    {{ knp_pagination_render(inventorys) }}
 </div>
+
+
+
+</div>
+  
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/main.js') }}"></script>
+<script>
+function myFunction() {
+  alert("Equipment is Now being deleted");
+}
+</script>
 
 {% endblock %}

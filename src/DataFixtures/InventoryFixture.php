@@ -11,7 +11,7 @@ class InventoryFixture extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create();
-for($i=0;$i<10;$i++){
+for($i=0;$i<20;$i++){
 
     $inventory= new Inventory();
     $inventory->setEquipment($faker->word);

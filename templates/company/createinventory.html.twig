@@ -1,5 +1,87 @@
 {% extends 'base.html.twig' %}
+{% form_theme formInventory 'bootstrap_4_layout.html.twig' %}
 {% block body %}
+<div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="sidebar-sticky pt-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active cl" href="/admin-dashboard">
+                <span data-feather="home"></span><i class="fas fa-home"></i>
+               home<span class="sr-only"></span>
+              </a>
+            </li>
+ 
+            <li class="nav-item">
+              <a class="nav-link active cl" href="/company/inventory">
+                <span data-feather="home"></span> <i class="fas fa-running"></i>
+                Inventory <span class="sr-only"></span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link cl" href="/clients">
+                <span data-feather="file"></span><i class="fas fa-users"></i>
+                Storage
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link cl" href="/users">
+                <span data-feather="file"></span><i class="fas fa-user"></i>
+               Actions
+              </a>
+            </li>
+            
+           
+          </ul>
+  
+        </div>
+        <br> <br> <br> <br> <br> <br> <br> 
+      </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
+      <style>
+      .blue{
+        float:right;
+     
+          margin-bottom:10px;
+          margin-left:400px;
+      }
+        .space{
+        float:right;
+      
+          margin-left:150px;
+      }
+      .a{
+          float:right;
+      }
+      h2{color:#485785}</style>
+     
+<div class="Container space">
+ {% if editMode %}
+<h2>Make changes on this Equipement</h2>
+{% else %}
+<h2 >Create your New  Equipement</h2>
+{% endif %}{{form_start(formInventory)}}
+<hr>{{form_row(formInventory.Equipment,{'attr':{'placeholder':'Equipement Code','class':"blue"}})}}
+{{form_row(formInventory.User,{'attr':{'placeholder':'User name','class':"blue"}})}}<hr>
 
-ayya baraa
+{{form_row(formInventory.OperatingSystem,{'attr':{'placeholder':'Operating System','class':"blue"}})}}<hr>
+{{form_row(formInventory.State,{'attr':{'placeholder':'State','class':"blue"}})}}<hr>
+{{form_row(formInventory.Brand,{'attr':{'placeholder':'Brand Name','class':"blue"}})}}<hr>
+{{form_row(formInventory.Model,{'attr':{'placeholder':'Model Number','class':"blue"}})}}<hr>
+{{form_row(formInventory.PurchaseDate,{'attr':{'placeholder':'Purchase Date','class':"blue"}})}}<hr>
+{{form_row(formInventory.Supplier,{'attr':{'placeholder':'Supplier Name','class':"blue"}})}}<hr>
+{{form_row(formInventory.LastScan,{'attr':{'placeholder':'Last Scan Date','class':"blue"}})}}<hr>
+{{form_row(formInventory.LastMaintenance,{'attr':{'placeholder':'Last Maintenance Date','class':"blue"}})}}<hr>
+{{form_row(formInventory.Locaation,{'attr':{'placeholder':'Location','class':"blue"}})}}<hr>
+{{form_row(formInventory.Notes,{'attr':{'placeholder':'Right down your notes here','class':"blue"}})}}<hr>
+<br><br>
+<button type="submit" class=" btn btn-info btn-lg float-right">
+{% if editMode %}
+Update Equipement
+{% else %}
+Add Equipement
+{% endif %}
+</button>
+{{form_end(formInventory)}}<br><br><br><br>
+</div>
 {% endblock %}

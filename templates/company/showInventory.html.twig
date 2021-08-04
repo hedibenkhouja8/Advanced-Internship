@@ -109,10 +109,10 @@ th,h2,p,strong{color:#485785}
  </div>
  
          
-            <a href="" class="btn btn-warning" title="" >
+            <a href="{{path('inventory_edit',{'id':inventory.id})}}" class="btn btn-warning" title="" >
                 <i class="fas fa-user-edit"></i>
             </a>
-            <a href="#" class="btn btn-danger" title=""
+            <a href="{{path('inventory_delete',{'id':inventory.id})}}" class="btn btn-danger" title=""
                  ><i class="fas fa-user-slash"></i></a>
                  </div>
       </div>
