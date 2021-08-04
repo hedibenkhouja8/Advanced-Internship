@@ -43,9 +43,9 @@ class CompanyController extends AbstractController
        
         $Data = $repo->findAll();
         $Inventorys=$paginator->paginate(
-$Data,
-$request->query->getInt('page',1),
-8
+     $Data,
+     $request->query->getInt('page',1),
+     10
 
 
         );
