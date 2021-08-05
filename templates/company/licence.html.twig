@@ -28,7 +28,8 @@ th,h2{color:#485785}
                 <span data-feather="file"></span><i class="fas fa-users"></i>
                 Storage
               </a>
-            </li><li class="nav-item">
+            </li>
+            <li class="nav-item">
               <a class="nav-link cl" href="/company/licence">
                 <span data-feather="file"></span><i class="fas fa-user"></i>
                Licences
@@ -48,49 +49,49 @@ th,h2{color:#485785}
         <br> <br> <br> <br> <br> <br> <br> 
       </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
      <div class="container">
-     <h2>This is Your Inventory</h2>
-       <a href="{{path("inventory_new")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add Equipement to your inventory</a>
+     <h2>These are your Available Licences :</h2>
+       <a href="{{path("licence_new")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add a Licence</a>
 <br><br>
-     <table class="table table-striped table-bordered border-primary table-active container">
+     <table class="table table-striped table-bordered border-primary table-active containerr">
      <br>
   <thead class="thead-type table-primary">
     <tr>
-      <th scope="col">Equipment</th>
-      <th scope="col">User</th>
-      <th scope="col">Location</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Supplier</th>
+      <th scope="col">Type</th>
       
-       <th scope="col">OperatingSystem</th>
-      <th scope="col">State</th>
-       <th scope="col">Brand</th>
-      <th scope="col">LastScan</th>
-      <th scope="col">LastMaintenance</th>
-         <th scope="col">Action</th>
+       <th scope="col">Compilance Type</th>
+      <th scope="col">User</th>
+       <th scope="col">Purchase Date</th>
+      <th scope="col">Expiration Date</th>
+       <th scope="col">Category</th>
+    <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
-  {% for inventory in inventorys %}
+  {% for licence in licences %}
     <tr>
-      <td scope="row">{{inventory.Equipment}}</th>
-      <td>{{inventory.User}}</td>
-      <td>{{inventory.Locaation}}</td>
+      <td scope="row">{{licence.ProductName}}</th>
+      <td>{{licence.supplier}}</td>
+      <td>{{licence.type}}</td>
       
-       <td>{{inventory.OperatingSystem}}</td>
-      <td>{{inventory.State}}</td>
+       <td>{{licence.CompilanceType}}</td>
+      <td>{{licence.User}}</td>
       
-       <td>{{inventory.Brand}}</td>
-      <td>{{inventory.LastScan}}</td>
-      <td>{{inventory.LastMaintenance}}</td>
-       <td> <a href="{{path('inventory_show',{'id':inventory.id})}}"><i class="far fa-eye"></i></a>
+       <td>{{licence.PurchaseDate|date("m/d/Y") }}</td>
+      <td>{{licence.ExpirationDate|date("m/d/Y") }}</td>
+       <td>{{licence.category.name}}</td>
+       <td> <a href="{{path('licence_show',{'id':licence.id})}}"><i class="far fa-eye"></i></a>
           
-           <a href="{{path('inventory_edit',{'id':inventory.id})}}" ><i class="fas fa-edit"></i> </a>
-           <a href="{{path('inventory_delete',{'id':inventory.id})}}" onclick="myFunction()" data-id=""{{inventory.id}}><i class="fas fa-trash delete-inventory"></i> </a>
+           <a href="{{path('licence_edit',{'id':licence.id})}}" ><i class="fas fa-edit"></i> </a>
+           <a href="{{path('licence_delete',{'id':licence.id})}}" onclick="myFunction()" ><i class="fas fa-trash "></i> </a>
           </td>
     </tr>
    {% endfor %}
   </tbody>
 </table>
 <div class="navigation b">
-    {{ knp_pagination_render(inventorys) }}
+    {{ knp_pagination_render(licences) }}
 </div>
 
 

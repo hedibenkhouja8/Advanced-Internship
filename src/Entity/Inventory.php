@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\InventoryRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=InventoryRepository::class)
  */
@@ -19,11 +19,25 @@ class Inventory
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 50,
+     *      minMessage = "This field must be at least {{ limit }} characters long",
+     *      maxMessage = "This field cannot be longer than {{ limit }} characters",
+       
+     * )
      */
     private $Equipment;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 50,
+     *      minMessage = " This field must be at least {{ limit }} characters long",
+     *      maxMessage = "This fieldcannot be longer than {{ limit }} characters",
+       
+     * )
      */
     private $User;
 
@@ -34,6 +48,13 @@ class Inventory
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *  * @Assert\Length(
+     *      min = 3,
+     *      max = 50,
+     *      minMessage = " This field must be at least {{ limit }} characters long",
+     *      maxMessage = "This fieldcannot be longer than {{ limit }} characters",
+       
+     * )
      */
     private $Notes;
 
@@ -44,16 +65,37 @@ class Inventory
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  * @Assert\Length(
+     *      min = 3,
+     *      max = 50,
+     *      minMessage = " This field must be at least {{ limit }} characters long",
+     *      maxMessage = "This fieldcannot be longer than {{ limit }} characters",
+       
+     * )
      */
     private $State;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  * @Assert\Length(
+     *      min = 3,
+     *      max = 50,
+     *      minMessage = " This field must be at least {{ limit }} characters long",
+     *      maxMessage = "This fieldcannot be longer than {{ limit }} characters",
+       
+     * )
      */
     private $Brand;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *  * @Assert\Length(
+     *      min = 5,
+     *      max = 50,
+     *      minMessage = " This field must be at least {{ limit }} characters long",
+     *      maxMessage = "This fieldcannot be longer than {{ limit }} characters",
+       
+     * )
      */
     private $Model;
 

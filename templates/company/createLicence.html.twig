@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% form_theme formInventory 'bootstrap_4_layout.html.twig' %}
+{% form_theme formLicence 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 <div class="container-fluid">
     <div class="row">
@@ -58,6 +58,7 @@
       .a{
           float:right;
       }
+      
       h2{color:#485785}</style>
      
 <div class="Container space">
@@ -65,28 +66,28 @@
 <h2>Make changes on this Equipement</h2>
 {% else %}
 <h2 >Create your New  Equipement</h2>
-{% endif %}{{form_start(formInventory)}}
-<hr>{{form_row(formInventory.Equipment,{'attr':{'placeholder':'Equipement Code','class':"blue"}})}}
-{{form_row(formInventory.User,{'attr':{'placeholder':'User name','class':"blue"}})}}<hr>
+{% endif %}
+{{form_start(formLicence)}}
+<hr>{{form_row(formLicence.Product_name,{'attr':{'placeholder':'Product Name','class':"blue"}})}}
+{{form_row(formLicence.User,{'attr':{'placeholder':'User name','class':"blue"}})}}<hr>
 
-{{form_row(formInventory.OperatingSystem,{'attr':{'placeholder':'Operating System','class':"blue"}})}}
-{{form_row(formInventory.State,{'attr':{'placeholder':'State','class':"blue"}})}}
-{{form_row(formInventory.Brand,{'attr':{'placeholder':'Brand Name','class':"blue"}})}}<hr>
-{{form_row(formInventory.Model,{'attr':{'placeholder':'Model Number','class':"blue"}})}}<hr>
-{{form_row(formInventory.PurchaseDate)}}
-{{form_row(formInventory.Supplier,{'attr':{'placeholder':'Supplier Name','class':"blue"}})}}<hr>
-{{form_row(formInventory.LastScan)}}
-{{form_row(formInventory.LastMaintenance)}}
-{{form_row(formInventory.Locaation)}}
-{{form_row(formInventory.Notes,{'attr':{'placeholder':'Right down your notes here','class':"blue"}})}}<hr>
+{{form_row(formLicence.Type,{'attr':{'placeholder':'Licence Type','class':"blue"}})}}
+
+{{form_row(formLicence.category,{'attr':{'placeholder':'Licence Type','class':"blue"}})}}
+{{form_row(formLicence.Compilance_type,{'attr':{'Compilance Type':'State','class':"blue"}})}}
+{{form_row(formLicence.Supplier,{'attr':{'placeholder':'Supplier Name'}})}}
+{{form_row(formLicence.expiration_date,{'attr':{'class':"red"}})}}
+{{form_row(formLicence.Purchase_date)}}
+
+
 <br><br>
 <button type="submit" class=" btn btn-info btn-lg float-right">
 {% if editMode %}
-Update Equipement
+Update Licence
 {% else %}
-Add Equipement
+Add New Licence
 {% endif %}
-</button>
-{{form_end(formInventory)}}<br><br><br><br>
+</button>{{form_end(formLicence)}}
+<br><br><br><br>
 </div>
 {% endblock %}

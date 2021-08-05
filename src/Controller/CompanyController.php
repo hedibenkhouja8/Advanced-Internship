@@ -7,12 +7,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Inventory;
 use App\Repository\InventoryRepository;
+use App\Entity\Licence;
+use App\Repository\LicenceRepository;
 use App\Form\InventoryType;
+use App\Form\LicenceType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,6 +59,24 @@ class CompanyController extends AbstractController
         ]);
     }
      /**
+     * @Route("/company/licence", name="company_licence")
+     */
+    public function licence(LicenceRepository $repo,Request $request,PaginatorInterface $paginator ){
+       
+        $Data = $repo->findAll();
+        $Licences=$paginator->paginate(
+     $Data,
+     $request->query->getInt('page',1),
+     10
+
+
+        );
+        return $this->render('company/licence.html.twig', [
+            'controller_name' => 'CompanyController',
+            'licences'=> $Licences
+        ]);
+    }
+     /**
      * @Route("/company/inventory/new", name="inventory_new")
      * @Route("/company/inventory/{id}/edit", name="inventory_edit")
      */
@@ -83,35 +105,35 @@ class CompanyController extends AbstractController
 
            ]);
     }
-    /**
-     * @Route("/company/inventory/edit/{id}", name="inventory_edit",method{"GET","POST"})
-    
+ /**
+     * @Route("/company/licence/new", name="licence_new")
+     * @Route("/company/licence/{id}/edit", name="licence_edit")
      */
-    /*public function edit(Request $request,$id){
-       
-            $inventory=new Inventory();
-       $inventory= $this->getDoctrine()->getRepository(Inventory::class)->find($id);
+    public function formlicence(Licence $licence = null , Request $request,EntityManagerInterface $manager){
+        if (!$licence){
+            $licence=new Licence();
+        }
    
-              $form=$this->createForm(InventoryType::class,$inventory);
+              $form=$this->createForm(LicenceType::class,$licence);
               $form->handleRequest($request);
    
               if($form->isSubmitted()&& $form->isValid()){
-                 
-                  
-                      $entityManager=$this->getDoctrine()->getManager();
-                     
-                  $entityManager->flush();
+                  if(!$licence->getId()){
+                      $licence->setCreatedAt(new \DateTimeImmutable());
+                  }
+                  $manager->persist($licence);
+                  $manager->flush();
    
-                   return $this->redirectToRoute('company_inventory');
-                  
-              }
+                   return $this->redirectToRoute('licence_show',['id'=> $licence->getId()]);
+                  }
+              
    
-              return $this->render('company/editInventory.html.twig',[
-               'formInventory'=> $form->CreateView()
-              // 'editMode'=>$form->getId() !== null
+              return $this->render('company/createLicence.html.twig',[
+               'formLicence'=> $form->CreateView(),
+              'editMode'=>$licence->getId() !== null
    
               ]);
-       }*/
+       }
      /**
      * @Route("/company/inventory/{id}", name="inventory_show")
      */
@@ -120,6 +142,18 @@ class CompanyController extends AbstractController
         return $this->render('company/showinventory.html.twig', [
            
             'inventory'=> $inventory
+        ]);
+
+
+    }
+     /**
+     * @Route("/company/licence/{id}", name="licence_show")
+     */
+    public function showlicence(Licence $licence){
+       
+        return $this->render('company/showLicence.html.twig', [
+           
+            'licence'=> $licence
         ]);
 
 
@@ -136,22 +170,21 @@ $em->remove($inventory);
 $em->flush();
 return $this->redirectToRoute('company_inventory');
 $this->addFlash('success', 'Article Created! Knowledge is power!');
-//return $this->render('company/inventory.html.twig');
-//return new Response("Euipment deleted");
 
     }
+/**
+     * @Route("/company/licence/delete/{id}", name="licence_delete")
+     * 
+     */
+    public function deletelicence(Licence $licence){
 
-    /*
-       
-       
-        $inventory=$this->getDoctrine()->getRepository(Inventory::class)->find($id);
-         
-        $entityManager=$this->getDoctrine()->getManager();
-        $entityManager->remove($inventory);
-        $entityManager->flush();
-$response= new Response();
-$response->send();
-    }
-*/
-
+        $em =$this->getDoctrine()->getManager();
+        $em->remove($licence);
+        $em->flush();
+        return $this->redirectToRoute('company_licence');
+        $this->addFlash('success', 'Licence Deleted!');
+        
+            }
+        
+  
 }
