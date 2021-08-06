@@ -50,7 +50,7 @@ class Inventory
      * @ORM\Column(type="text", nullable=true)
      *  * @Assert\Length(
      *      min = 3,
-     *      max = 50,
+     *      max = 500,
      *      minMessage = " This field must be at least {{ limit }} characters long",
      *      maxMessage = "This fieldcannot be longer than {{ limit }} characters",
        

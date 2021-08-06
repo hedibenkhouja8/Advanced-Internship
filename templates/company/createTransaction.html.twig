@@ -1,13 +1,6 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello CompanyController!{% endblock %}
-
+{% form_theme formTransaction 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .cl{color:#485785;}
-</style>
 <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -31,14 +24,13 @@
                 <span data-feather="file"></span><i class="fas fa-users"></i>
                 Storage
               </a>
-            </li>
-             <li class="nav-item">
+            </li><li class="nav-item">
               <a class="nav-link cl" href="/company/licence">
-                <span data-feather="file"></span><i class="fas fa-users"></i>
-                Licences
+                <span data-feather="file"></span><i class="fas fa-user"></i>
+               Licences
               </a>
             </li>
-              <li class="nav-item">
+                 <li class="nav-item">
               <a class="nav-link cl" href="/company/transaction">
                 <span data-feather="file"></span><i class="fas fa-user"></i>
                Transactions
@@ -50,5 +42,44 @@
   
         </div>
         <br> <br> <br> <br> <br> <br> <br> 
-      </nav>
+      </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
+      <style>
+      .blue{
+        float:right;
+     
+          margin-bottom:10px;
+          margin-left:400px;
+      }
+        .space{
+        float:right;
+      
+          margin-left:150px;
+      }
+      .a{
+          float:right;
+      }
+      
+      h2{color:#485785}</style>
+     
+<div class="Container space">
+ 
+<h2 >Choose a Product and make your New  Transaction</h2>
+
+{{form_start(formTransaction)}}
+{{form_row(formTransaction.TransactionDate)}}
+{{form_row(formTransaction.product,{'attr':{'placeholder':'Product Name','class':"blue"}})}}
+{{form_row(formTransaction.type,{'attr':{'placeholder':'User name','class':"blue"}})}}<hr>
+
+{{form_row(formTransaction.quantity,{'attr':{'placeholder':'Transaction Quantity','class':"blue"}})}}
+
+
+{{form_row(formTransaction.note,{'attr':{'Compilance Type':'State','class':"blue"}})}}
+
+
+<br><br><br>
+<button type="submit" class=" btn btn-info btn-lg float-right">
+Make Transaction
+</button>{{form_end(formTransaction)}}
+<br><br><br><br>
+</div>
 {% endblock %}

@@ -19,7 +19,7 @@ for($i=0;$i<20;$i++){
     $inventory->setLocaation($faker->word);
     $inventory->setNotes($faker->Text);
     $inventory->setOperatingSystem($faker->word);
-    $inventory->setState($faker->word);
+    $inventory->setState($faker->randomElement($array = array ('a','b','c')));
     $inventory->setBrand($faker->word);
     $inventory->setModel($faker->word);
    

@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Licence;
+
 use App\Entity\Category;
 use Faker;
 class LicenceFixture extends Fixture
