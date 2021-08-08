@@ -17,9 +17,9 @@ for($i=0;$i<20;$i++){
     $product= new Product();
     $product->setreference($faker->word);
     $product->setdescription($faker->text);
-    $product->setmanufacturer($faker->word);
-    $product->setquantity($faker->randomDigit);
-    $product->setstockingArea($faker->word);
+    $product->setmanufacturer($faker->randomElement($array = array ('Mechanic Depatrtment','Chemics Department','IT department ')));
+    $product->setquantity($faker->numberBetween($min = 50, $max = 9000));
+    $product->setstockingArea($faker->randomElement($array = array ('Main Warehouse','Backyard Warehouse','IT department Warehouse')));
     
     $product->setCreatedAt(new \DateTimeImmutable());
     $manager->persist($product);
@@ -29,7 +29,7 @@ for($i=0;$i<20;$i++){
         $transaction= new Transaction();
         $transaction->setnote($faker->text);
         $transaction->setquantity($faker->randomDigit);
-        $transaction->settype("Output");
+        $transaction->settype($faker->randomElement($array = array ('Output','Input')));
     
         $transaction->setTransactionDate(new \DateTime());
         $transaction->setproduct($product);

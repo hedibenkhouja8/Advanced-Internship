@@ -82,7 +82,7 @@ th,h2{color:#485785}
        <td> <a href="{{path('licence_show',{'id':licence.id})}}"><i class="far fa-eye"></i></a>
           
            <a href="{{path('licence_edit',{'id':licence.id})}}" ><i class="fas fa-edit"></i> </a>
-           <a href="{{path('licence_delete',{'id':licence.id})}}" onclick="myFunction()" ><i class="fas fa-trash "></i> </a>
+           <a href="{{path('licence_delete',{'id':licence.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" ><i class="fas fa-trash "></i> </a>
           </td>
     </tr>
    {% endfor %}

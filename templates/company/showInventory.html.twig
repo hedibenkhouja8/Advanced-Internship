@@ -90,10 +90,10 @@ th,h2,p,strong{color:#485785}
  </div>
    <div class="row">
     <div class="form-group col">
-    <label for="firstname" class="form-label">      <i class="fas fa-barcode"></i><strong> LastScan :</strong> {{ inventory.lastscan }}</label> 
+    <label for="firstname" class="form-label">      <i class="fas fa-barcode"></i><strong> LastScan :</strong> {{ inventory.lastscan|date("m/d/Y") }}</label> 
      <hr>  </div> 
  <div class="form-group col">
-     <label for="prenom" class="form-label"><i class="fas fa-wrench"></i><strong> Lastmaintenance :</strong> {{ inventory.lastmaintenance }}  </label> 
+     <label for="prenom" class="form-label"><i class="fas fa-wrench"></i><strong> Lastmaintenance :</strong> {{ inventory.lastmaintenance|date("m/d/Y") }}  </label> 
    <hr>   </div> 
     
     
@@ -104,7 +104,7 @@ th,h2,p,strong{color:#485785}
     <label for="firstname" class="form-label">    <i class="fas fa-parachute-box"></i><strong> supplier :</strong> {{ inventory.supplier }}</label> 
       <hr> </div> 
    <div class="form-group col">
-    <label for="firstname" class="form-label">     <i class="fas fa-shopping-cart"></i><strong> Purchasedate :</strong> {{ inventory.purchasedate }}</label> 
+    <label for="firstname" class="form-label">     <i class="fas fa-shopping-cart"></i><strong> Purchasedate :</strong> {{ inventory.purchasedate |date("m/d/Y")}}</label> 
       <hr> </div> 
  
     
@@ -117,7 +117,7 @@ th,h2,p,strong{color:#485785}
             <a href="{{path('inventory_edit',{'id':inventory.id})}}" class="btn btn-warning" title="" >
                 <i class="fas fa-user-edit"></i>
             </a>
-            <a href="{{path('inventory_delete',{'id':inventory.id})}}" class="btn btn-danger" title=""
+            <a href="{{path('inventory_delete',{'id':inventory.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger" title=""
                  ><i class="fas fa-user-slash"></i></a>
                  </div>
       </div>

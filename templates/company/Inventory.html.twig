@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
+
 <style>
 a{color:black;}
 th,h2{color:#485785}
@@ -77,12 +79,12 @@ th,h2{color:#485785}
       <td>{{inventory.State}}</td>
       
        <td>{{inventory.Brand}}</td>
-      <td>{{inventory.LastScan}}</td>
-      <td>{{inventory.LastMaintenance}}</td>
+      <td>{{inventory.LastScan|date("m/d/Y")}}</td>
+      <td>{{inventory.LastMaintenance|date("m/d/Y")}}</td>
        <td> <a href="{{path('inventory_show',{'id':inventory.id})}}"><i class="far fa-eye"></i></a>
           
            <a href="{{path('inventory_edit',{'id':inventory.id})}}" ><i class="fas fa-edit"></i> </a>
-           <a href="{{path('inventory_delete',{'id':inventory.id})}}" onclick="myFunction()" data-id=""{{inventory.id}}><i class="fas fa-trash delete-inventory"></i> </a>
+           <a href="{{path('inventory_delete',{'id':inventory.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" data-id=""{{inventory.id}}><i class="fas fa-trash delete-inventory"></i> </a>
           </td>
     </tr>
    {% endfor %}

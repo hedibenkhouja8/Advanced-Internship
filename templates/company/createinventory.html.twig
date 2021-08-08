@@ -71,13 +71,14 @@
 
 {{form_row(formInventory.OperatingSystem,{'attr':{'placeholder':'Operating System','class':"blue"}})}}
 {{form_row(formInventory.State,{'attr':{'placeholder':'State','class':"blue"}})}}
-{{form_row(formInventory.Brand,{'attr':{'placeholder':'Brand Name','class':"blue"}})}}<hr>
-{{form_row(formInventory.Model,{'attr':{'placeholder':'Model Number','class':"blue"}})}}<hr>
-{{form_row(formInventory.PurchaseDate)}}
-{{form_row(formInventory.Supplier,{'attr':{'placeholder':'Supplier Name','class':"blue"}})}}<hr>
+{{form_row(formInventory.Brand,{'attr':{'placeholder':'Brand Name','class':"blue"}})}}<br>
+{{form_row(formInventory.Model,{'attr':{'placeholder':'Model Number','class':"blue"}})}}
+
+{{form_row(formInventory.Supplier,{'attr':{'placeholder':'Supplier Name','class':"blue"}})}}<br><br>
 {{form_row(formInventory.LastScan)}}
+{{form_row(formInventory.PurchaseDate)}}
 {{form_row(formInventory.LastMaintenance)}}
-{{form_row(formInventory.Locaation)}}
+{{form_row(formInventory.Locaation,{'label':'Location'})}}
 {{form_row(formInventory.Notes,{'attr':{'placeholder':'Right down your notes here','class':"blue"}})}}<hr>
 <br><br>
 <button type="submit" class=" btn btn-info btn-lg float-right">

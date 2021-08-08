@@ -30,23 +30,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CompanyController extends AbstractController
 {
+  
     /**
-     * @Route("/company", name="company")
+     * @Route("/", name="company")
      */
     public function index(): Response
     {
-       
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('company/index.html.twig', [
             'controller_name' => 'CompanyController'
         ]);
     }
-    /**
-     * @Route("/", name="home")
-     */
-    public function home(){
-
-        return $this->render('company/home.html.twig');
-    }
+  
      /**
      * @Route("/company/inventory", name="company_inventory")
      */
@@ -228,11 +223,16 @@ class CompanyController extends AbstractController
                      $id=$transaction->getProduct()->getId();
                  $product = $this->getDoctrine()
                                  ->getRepository(Product::class)
-                                 ->find($id);
+                                 ->find($id );
 
                                  if ($product) {
+                                     if($transaction->getType()=='Input'){
                                    $product->setQuantity($product->getQuantity()+$transaction->getquantity())
                                     ;
+                                
+                                
+                                }else{$product->setQuantity($product->getQuantity()-$transaction->getquantity())
+                                    ;}
                                 }              
                   /*    $em = $this->getDoctrine()->getManager();
 

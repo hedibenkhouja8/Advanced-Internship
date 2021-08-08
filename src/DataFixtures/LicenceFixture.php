@@ -24,10 +24,10 @@ class LicenceFixture extends Fixture
         
             $licence= new Licence();
             $licence->setProductName($faker->word);
-            $licence->setSupplier($faker->word);
-            $licence->setType($faker->word);
-            $licence->setCompilanceType($faker->word);
-            $licence->setUser($faker->name);
+            $licence->setSupplier($faker->name);
+            $licence->setType($faker->randomElement($array = array ('OS','Software')));
+            $licence->setCompilanceType($faker->randomElement($array = array ('Normal','Pro')));
+            $licence->setUser($faker->randomElement($array = array ('Mohamed','Ahmed','Sarah')));
           
            
             $licence->setPurchaseDate(new \DateTime());

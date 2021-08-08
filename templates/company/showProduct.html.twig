@@ -59,6 +59,7 @@ th,h2,p,strong{color:#485785}
     <p class="card-title"><strong>Manufacturer:</strong> {{product.manufacturer}}</p>
     <p class="card-text"><strong>Quantity:</strong> {{product.quantity}}</p>
     <p class="card-text"><strong>Description:</strong> {{product.description}}</p>
+     <p class="card-text"><strong>Transactions made:</strong> {{product.transactions | length}}</p>
       </div>
   <div class="card-footer text-muted">
   <a href="{{path('product_edit',{'id':product.id})}}" class="btn btn-warning" title="" >

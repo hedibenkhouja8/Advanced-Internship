@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<style>
+.a{
+    margin-left:500px;
+     margin-right:500px;
+        margin-top:50px;
+}</style>
+<div class="card text-center a">
+  <div class="card-header">
+    Register Here
+  </div>
+  <div class="card-body ">
+   {{form_start(form)}}
+    <p class="card-text">{{form_row(form.email,{'attr':{'placeholder':'xyz@gmail.com'}})}}</p>
+    <p class="card-text">{{form_row(form.username,{'attr':{'placeholder':'Type in your username'}})}}</p>
+    <p class="card-text">{{form_row(form.password,{'attr':{'placeholder':'Type in your password'}})}}</p>
+    <p class="card-text">{{form_row(form.confirm_password,{'attr':{'placeholder':'Confirm your password'}})}}</p>
+    <button type="submit" class="btn btn-info">Submit</button>
+     {{form_end(form)}}
+  </div>
+  
+</div>
+
+{% endblock  %}

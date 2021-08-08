@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\InventoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=InventoryRepository::class)
+
  */
 class Inventory
 {
@@ -48,13 +50,7 @@ class Inventory
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     *  * @Assert\Length(
-     *      min = 3,
-     *      max = 500,
-     *      minMessage = " This field must be at least {{ limit }} characters long",
-     *      maxMessage = "This fieldcannot be longer than {{ limit }} characters",
-       
-     * )
+     
      */
     private $Notes;
 
@@ -80,8 +76,8 @@ class Inventory
      *  * @Assert\Length(
      *      min = 3,
      *      max = 50,
-     *      minMessage = " This field must be at least {{ limit }} characters long",
-     *      maxMessage = "This fieldcannot be longer than {{ limit }} characters",
+     *      minMessage = " This field must be at least 3 characters long",
+     *      maxMessage = "This fieldcannot be longer than 50 characters",
        
      * )
      */
@@ -90,17 +86,17 @@ class Inventory
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      *  * @Assert\Length(
-     *      min = 5,
+     *      min = 8,
      *      max = 50,
-     *      minMessage = " This field must be at least {{ limit }} characters long",
-     *      maxMessage = "This fieldcannot be longer than {{ limit }} characters",
+     *      minMessage = " This field must be at least 8 characters long",
+     *      maxMessage = "This fieldcannot be longer than 50 characters",
        
      * )
      */
     private $Model;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="date", length=255, nullable=true)
      */
     private $PurchaseDate;
 
@@ -110,12 +106,12 @@ class Inventory
     private $Supplier;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="date", length=255, nullable=true)
      */
     private $LastScan;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="date", length=255, nullable=true)
      */
     private $LastMaintenance;
 
@@ -225,12 +221,12 @@ class Inventory
         return $this;
     }
 
-    public function getPurchaseDate(): ?string
+    public function getPurchaseDate(): ?\DateTimeInterface
     {
         return $this->PurchaseDate;
     }
 
-    public function setPurchaseDate(?string $PurchaseDate): self
+    public function setPurchaseDate(\DateTimeInterface $PurchaseDate): self
     {
         $this->PurchaseDate = $PurchaseDate;
 
@@ -249,24 +245,24 @@ class Inventory
         return $this;
     }
 
-    public function getLastScan(): ?string
+    public function getLastScan(): ?\DateTimeInterface
     {
         return $this->LastScan;
     }
 
-    public function setLastScan(?string $LastScan): self
+    public function setLastScan(\DateTimeInterface $LastScan): self
     {
         $this->LastScan = $LastScan;
 
         return $this;
     }
 
-    public function getLastMaintenance(): ?string
+    public function getLastMaintenance(): ?\DateTimeInterface
     {
         return $this->LastMaintenance;
     }
 
-    public function setLastMaintenance(?string $LastMaintenance): self
+    public function setLastMaintenance(\DateTimeInterface $LastMaintenance): self
     {
         $this->LastMaintenance = $LastMaintenance;
 

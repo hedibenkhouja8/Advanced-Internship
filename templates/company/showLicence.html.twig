@@ -67,7 +67,7 @@ th,h2,p,strong{color:#485785}
   <a href="{{path('licence_edit',{'id':licence.id})}}" class="btn btn-warning" title="" >
                 <i class="fas fa-user-edit"></i>
             </a>
-            <a href="{{path('licence_delete',{'id':licence.id})}}" class="btn btn-danger" title=""
+            <a href="{{path('licence_delete',{'id':licence.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger" title=""
                  ><i class="fas fa-user-slash"></i></a>
  
   </div>

@@ -60,7 +60,7 @@ th,h2{color:#485785}
     <h5 class="card-title">Reference:{{transaction.product.reference}}  <p class="float-right"> ID:{{transaction.product.id}}</p></h5>
     <p class="card-text">{{transaction.note}}</p>
     <p class="card-text"> Quantity :{{transaction.quantity}}</p>
-    <p class="card-text">{{transaction.TransactionDate|date("m/d/Y") }}  <a href="{{path('transaction_delete',{'id':transaction.id})}}" onclick="myFunction()" class="btn btn-danger float-right">Delete</a></p>
+    <p class="card-text">{{transaction.TransactionDate|date("m/d/Y") }}  <a href="{{path('transaction_delete',{'id':transaction.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger float-right">Delete</a></p>
    
     
   </div>

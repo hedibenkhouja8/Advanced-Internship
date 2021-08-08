@@ -15,18 +15,18 @@ for($i=0;$i<20;$i++){
 
     $inventory= new Inventory();
     $inventory->setEquipment($faker->word);
-    $inventory->setUser($faker->word);
-    $inventory->setLocaation($faker->word);
+    $inventory->setUser($faker->randomElement($array = array ('Ali','Hedi','Oussema','Fathi')));
+    $inventory->setLocaation($faker->randomElement($array = array ('IT department','Manegement Department','Administration Office','Warehouse')));
     $inventory->setNotes($faker->Text);
-    $inventory->setOperatingSystem($faker->word);
-    $inventory->setState($faker->randomElement($array = array ('a','b','c')));
-    $inventory->setBrand($faker->word);
+    $inventory->setOperatingSystem($faker->randomElement($array = array ('Windows','Linux','Redhat','Solid Works')));
+    $inventory->setState($faker->randomElement($array = array ('Perfect','Good','bad')));
+    $inventory->setBrand($faker->randomElement($array = array ('Asus','Dell','Samsung','Apple')));
     $inventory->setModel($faker->word);
    
-    $inventory->setLastScan($faker->date($format = 'Y-m-d', $max = 'now'));
-    $inventory->setLastMaintenance($faker->date($format = 'Y-m-d', $max = 'now'));
-    $inventory->setSupplier($faker->word);
-    $inventory->setPurchaseDate($faker->date($format = 'Y-m-d', $max = 'now'));
+    $inventory->setLastScan(new \DateTime);
+    $inventory->setLastMaintenance(new \DateTime);
+    $inventory->setSupplier($faker->name);
+    $inventory->setPurchaseDate(new \DateTime);
     $inventory->setCreatedAt(new \DateTimeImmutable());
 $manager->persist($inventory);}
         // $product = new Product();
