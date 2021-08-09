@@ -27,7 +27,7 @@ class TransactionType extends AbstractType
             ->add('note')
             ->add('quantity')
             ->add('TransactionDate', DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
             ])
            
             ->add('product', EntityType::class, [

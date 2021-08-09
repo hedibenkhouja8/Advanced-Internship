@@ -3,6 +3,13 @@
 <style>
 a{color:black;}
 th,h2,p,strong{color:#485785}
+ @media print{
+
+      body *{
+        visibility: hidden;
+      }
+      .print-container, .print-container *{visibility: visible;}
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -10,7 +17,7 @@ th,h2,p,strong{color:#485785}
         <div class="sidebar-sticky pt-3">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active cl" href="/admin-dashboard">
+              <a class="nav-link active cl" href="/">
                 <span data-feather="home"></span><i class="fas fa-home"></i>
                home<span class="sr-only"></span>
               </a>
@@ -52,9 +59,9 @@ th,h2,p,strong{color:#485785}
     <br>
        <div class="card" style="width: 70rem;">
         <div class="card-body">
-          <h3 class="card-title"><strong> Equipment:   {{ inventory.equipment  }}</strong></h3>
+          <h3 class="card-title print-container"><strong> Equipment:   {{ inventory.equipment  }}</strong></h3>
             <br>
-        <div class="row">
+        <div class="row print-container">
     <div class="form-group col">
     <label for="firstname" class="form-label"><i class="fas fa-user"></i><strong> User:</strong> {{ inventory.user }}</label> 
    <hr>    </div> 
@@ -65,7 +72,7 @@ th,h2,p,strong{color:#485785}
     
     
  </div>
-    <div class="row">
+    <div class="row print-container">
     <div class="form-group col">
     <label for="firstname" class="form-label"><i class="fas fa-star"></i><strong> State:</strong> {{ inventory.state }} </label> 
      <hr>  </div> 
@@ -77,7 +84,7 @@ th,h2,p,strong{color:#485785}
     
  </div>
  
-    <div class="row">
+    <div class="row print-container">
     <div class="form-group col">
     <label for="firstname" class="form-label">    <i class="fas fa-copyright"></i><strong> Brand:</strong> {{ inventory.brand }}</label> 
      <hr>  </div> 
@@ -88,22 +95,22 @@ th,h2,p,strong{color:#485785}
     
     
  </div>
-   <div class="row">
+   <div class="row print-container">
     <div class="form-group col">
     <label for="firstname" class="form-label">      <i class="fas fa-barcode"></i><strong> LastScan :</strong> {{ inventory.lastscan|date("m/d/Y") }}</label> 
      <hr>  </div> 
- <div class="form-group col">
+ <div class="form-group col print-container">
      <label for="prenom" class="form-label"><i class="fas fa-wrench"></i><strong> Lastmaintenance :</strong> {{ inventory.lastmaintenance|date("m/d/Y") }}  </label> 
    <hr>   </div> 
     
     
     
  </div>
-    <div class="row">
-    <div class="form-group col">
+    <div class="row print-container">
+    <div class="form-group col print-container">
     <label for="firstname" class="form-label">    <i class="fas fa-parachute-box"></i><strong> supplier :</strong> {{ inventory.supplier }}</label> 
       <hr> </div> 
-   <div class="form-group col">
+   <div class="form-group col print-container">
     <label for="firstname" class="form-label">     <i class="fas fa-shopping-cart"></i><strong> Purchasedate :</strong> {{ inventory.purchasedate |date("m/d/Y")}}</label> 
       <hr> </div> 
  
@@ -119,10 +126,30 @@ th,h2,p,strong{color:#485785}
             </a>
             <a href="{{path('inventory_delete',{'id':inventory.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger" title=""
                  ><i class="fas fa-user-slash"></i></a>
+                            
+ <a  class="btn btn-info" title="" onclick="window.print();" >
+  
+                <i class="fas fa-print"></i>
+                
+            </a>
                  </div>
       </div>
      <br><br>
    
 </div>
+
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/main.js') }}"></script>
+<script>
+function myFunction() {
+  alert("Equipment is Now being deleted");
+}
+</script>
+<script>
+    function printPage() {
+      window.print();
+    }
+    </script>
 
 {% endblock %}

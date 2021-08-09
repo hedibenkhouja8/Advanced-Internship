@@ -45,14 +45,14 @@ class InventoryType extends AbstractType
             ->add('Brand')
             ->add('Model')
             ->add('PurchaseDate', DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
             ])
             ->add('Supplier')
             ->add('LastScan', DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
             ])
             ->add('LastMaintenance', DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
             ])
            
         ;

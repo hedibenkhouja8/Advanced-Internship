@@ -19,22 +19,21 @@ class InventoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Inventory::class);
     }
 
-    // /**
-    //  * @return Inventory[] Returns an array of Inventory objects
-    //  */
-    /*
-    public function findByExampleField($value)
+ /**
+     * @return Inventory[] Returns an array of Inventory objects
+     */
+    
+    public function findOldItems()
     {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
+           
+            ->orderBy('i.LastScan', 'ASC')
+            ->setMaxResults(3)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Inventory

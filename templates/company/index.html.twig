@@ -1,12 +1,9 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello CompanyController!{% endblock %}
-
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .cl{color:#485785;}
+a{color:black;}
+th,h2{color:#485785}
+.b{padding-left:400px;}
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -14,7 +11,7 @@
         <div class="sidebar-sticky pt-3">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active cl" href="/admin-dashboard">
+              <a class="nav-link active cl" href="/">
                 <span data-feather="home"></span><i class="fas fa-home"></i>
                home<span class="sr-only"></span>
               </a>
@@ -31,24 +28,95 @@
                 <span data-feather="file"></span><i class="fas fa-users"></i>
                 Storage
               </a>
-            </li>
-             <li class="nav-item">
+            </li><li class="nav-item">
               <a class="nav-link cl" href="/company/licence">
-                <span data-feather="file"></span><i class="fas fa-users"></i>
-                Licences
+                <span data-feather="file"></span><i class="fas fa-user"></i>
+               Licences
               </a>
             </li>
-              <li class="nav-item">
+               <li class="nav-item">
               <a class="nav-link cl" href="/company/transaction">
                 <span data-feather="file"></span><i class="fas fa-user"></i>
                Transactions
               </a>
             </li>
-            
            
           </ul>
   
         </div>
         <br> <br> <br> <br> <br> <br> <br> 
-      </nav>
-{% endblock %}
+      </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
+     <div class="container">
+     <h2>Welcome {{app.user.username}}</h2>
+     
+    <br><br>
+   
+   <div class="container">
+
+  <div class="row">
+    <div class="col-sm">   <h5>These are your recent Transactions</h5><br>
+   {% for transaction in transactions %}
+    <div class="card">
+  <div class="card-header">
+   <strong> {{transaction.type}}</strong>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Reference:{{transaction.product.reference}}  <p class="float-right"> ID:{{transaction.product.id}}</p></h5>
+    
+    <p class="card-text"> Quantity :{{transaction.quantity}}</p>
+    <p class="card-text">Note :{{transaction.note}}</p>
+    <p class="card-text">{{transaction.TransactionDate|date("m/d/Y") }}  <a href="{{path('transaction_delete',{'id':transaction.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger float-right">Delete</a></p>
+   
+    
+  </div>
+</div>
+<br> <br>
+   {% endfor %}
+    </div>
+    <div class="col-sm">
+    <h5>These are the Licences that needs to be extended soon</h5><br>
+      {% for licence in licences %}
+    <div class="card">
+  <div class="card-header">
+   <strong> Licence {{licence.id}}</strong>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Licence Code code: {{licence.ProductName}}  </h5>
+    <p class="card-text"> User:{{licence.Supplier}}</p>
+    <p class="card-text"> Category  :{{licence.category.name }}</p>
+    <p class="card-text">Exiration Date :{{licence.ExpirationDate|date("m/d/Y") }}  </p><p><a href="{{path('licence_delete',{'id':licence.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger float-right">Delete</a> &nbsp; &nbsp; &nbsp;
+    &nbsp;<a href="{{path('licence_edit',{'id':licence.id})}}"  class="btn btn-warning float-right">Update</a></p>
+   
+    
+  </div>
+</div>
+<br> <br>
+   
+   
+   {% endfor %}
+    </div>
+    <div class="col-sm">
+        <h5>These are the items that needs to be scanned</h5><br>
+  {% for inventory in inventorys %}
+    <div class="card">
+  <div class="card-header">
+   <strong> Item {{inventory.id}}</strong>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Equipment code:{{inventory.Equipment}}  </h5>
+    <p class="card-text"> Location:{{inventory.Locaation}}</p>
+    <p class="card-text"> Purchase Date :{{inventory.PurchaseDate|date("m/d/Y") }}</p>
+    <p class="card-text">Last Scan :{{inventory.LastScan|date("m/d/Y") }} </p><p> <a href="{{path('inventory_delete',{'id':inventory.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger float-right">Delete</a> &nbsp; &nbsp; &nbsp;
+    &nbsp;<a href="{{path('inventory_edit',{'id':inventory.id})}}"  class="btn btn-warning float-right">Update</a></p>
+   
+    
+  </div>
+</div>
+<br> <br>
+   
+   
+   {% endfor %}
+    </div>
+  </div>
+</div>
+   {% endblock %}

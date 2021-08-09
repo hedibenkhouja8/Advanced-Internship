@@ -13,10 +13,10 @@ class LicenceFixture extends Fixture
     public function load(ObjectManager $manager)
     {
             $faker = Faker\Factory::create('fr_FR');
-            for($j=0;$j<5;$j++){
+            for($j=0;$j<2;$j++){
         
                 $category= new Category();
-                $category->setname($faker->word);
+                $category->setname($faker->randomElement($array = array ('OS','Software')));
                 $category->setdescription($faker->text);
                 $manager->persist($category);
                 //mt_rand(5,6);
@@ -25,7 +25,6 @@ class LicenceFixture extends Fixture
             $licence= new Licence();
             $licence->setProductName($faker->word);
             $licence->setSupplier($faker->name);
-            $licence->setType($faker->randomElement($array = array ('OS','Software')));
             $licence->setCompilanceType($faker->randomElement($array = array ('Normal','Pro')));
             $licence->setUser($faker->randomElement($array = array ('Mohamed','Ahmed','Sarah')));
           

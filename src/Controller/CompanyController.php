@@ -34,13 +34,31 @@ class CompanyController extends AbstractController
     /**
      * @Route("/", name="company")
      */
-    public function index(): Response
+    public function index(InventoryRepository $repo, LicenceRepository $repoo, TransactionRepository $repooo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
+        $Inventorys = $repo->findOldItems();
+        $Licences = $repoo->findOldLicences();
+        $Transactions=$repooo->findRecentTransactions();
         return $this->render('company/index.html.twig', [
-            'controller_name' => 'CompanyController'
+            'controller_name' => 'CompanyController',
+            'inventorys' => $Inventorys,
+            'licences' => $Licences,
+            'transactions'=>$Transactions
         ]);
     }
+      /**
+     * @Route("/", name="recent_inventory")
+     */
+  /*  public function recentinventory(){
+       $repo =$this->getDoctrine()->getRepository(Licence::class);
+        $licences = $repo->findAll();
+    
+        return $this->render('company/index.html.twig', [
+          
+            'licences' => $licences
+        ]);
+    }*/
   
      /**
      * @Route("/company/inventory", name="company_inventory")

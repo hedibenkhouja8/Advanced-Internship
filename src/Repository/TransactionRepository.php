@@ -19,9 +19,25 @@ class TransactionRepository extends ServiceEntityRepository
         parent::__construct($registry, Transaction::class);
     }
 
-    // /**
-    //  * @return Transaction[] Returns an array of Transaction objects
-    //  */
+     /**
+      * @return Transaction[] Returns an array of Transaction objects
+     */
+
+    public function findRecentTransactions()
+    {
+        return $this->createQueryBuilder('i')
+           
+            ->orderBy('i.CreatedAt', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+   
+
+
+
+
     /*
     public function findByExampleField($value)
     {

@@ -19,9 +19,28 @@ class LicenceRepository extends ServiceEntityRepository
         parent::__construct($registry, Licence::class);
     }
 
-    // /**
-    //  * @return Licence[] Returns an array of Licence objects
-    //  */
+     /**
+      * @return Licence[] Returns an array of Licence objects
+    */
+    public function findOldLicences()
+    {
+        return $this->createQueryBuilder('i')
+           
+            ->orderBy('i.expiration_date', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+   
+   
+   
+   
+   
+   
+   
+   
+   
     /*
     public function findByExampleField($value)
     {

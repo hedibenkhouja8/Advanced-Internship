@@ -27,10 +27,6 @@ class Licence
      */
     private $Supplier;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $Type;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -92,18 +88,7 @@ class Licence
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->Type;
-    }
-
-    public function setType(?string $Type): self
-    {
-        $this->Type = $Type;
-
-        return $this;
-    }
-
+   
     public function getCompilanceType(): ?string
     {
         return $this->Compilance_type;

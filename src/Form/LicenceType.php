@@ -6,9 +6,11 @@ use App\Entity\Licence;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 class LicenceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -16,11 +18,17 @@ class LicenceType extends AbstractType
         $builder
             ->add('Product_name')
             ->add('Supplier')
-            ->add('Type')
-            ->add('Compilance_type')
+            
+            ->add('Compilance_type', ChoiceType::class, [
+                'choices'  => [
+                    'Pro' => 'Pro',
+                    'Normal' => 'Normal',
+                  
+                ],
+            ])
             ->add('User')
             ->add('expiration_date', DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
             ])
             ->add('category', EntityType::class, [
                 // looks for choices from this entity
@@ -35,7 +43,7 @@ class LicenceType extends AbstractType
             ])
             
             ->add('Purchase_date', DateType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
             ])
            
         ;
