@@ -39,17 +39,19 @@ security:
         
          - { path: ^/company/inventory, roles: ROLE_USER }
          - { path: ^/company/transaction, roles: ROLE_USER }
-         - { path: ^/company/licence, roles: ROLE_USER }
+         - { path: ^/company/licence, roles: ROLE_ADMIN }
          - { path: ^/company/product, roles: ROLE_USER }
          - { path: ^/company/inventory/new, roles: ROLE_USER }
          - { path: ^/company/inventory/edit, roles: ROLE_USER }
-         - { path: ^/company/licence/new, roles: ROLE_USER }
-         - { path: ^/company/licence/edit, roles: ROLE_USER }
+         - { path: ^/company/licence/new, roles: ROLE_ADMIN }
+         - { path: ^/company/licence/edit, roles: ROLE_ADMIN }
          - { path: ^/company/product/new, roles: ROLE_USER }
          - { path: ^/company/product/edit, roles: ROLE_USER }
          - { path: ^/company/inventory/, roles: ROLE_USER }
          - { path: ^/company/transaction/new/, roles: ROLE_USER }
-         - { path: ^/company/transaction/delete/, roles: ROLE_USER }
+         - { path: ^/company/transaction/delete/, roles: ROLE_ADMIN }
          - { path: ^/company/licence/delete/, roles: ROLE_USER }
          - { path: ^/company/inventory/delete/, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER

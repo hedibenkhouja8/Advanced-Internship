@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -41,9 +43,24 @@ class User implements UserInterface
      */
     private $password;
     /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
      *  @Assert\EqualTo(propertyPath="password",message="Your passwords must be the same"))
      */
     public $confirm_password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="user")
+     */
+    private $transactions;
+
+    public function __construct()
+    {
+        $this->transactions = new ArrayCollection();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -86,9 +103,51 @@ class User implements UserInterface
     }
     public function eraseCredentials(){}
     public function getSalt(){}
-    public function getRoles()
+    
+    public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+    public function setRoles(array $roles):self
+    {
+
+        $this-> roles = $roles;
+        return $this ;
+
+    }
+
+    /**
+     * @return Collection|Transaction[]
+     */
+    public function getTransactions(): Collection
+    {
+        return $this->transactions;
+    }
+
+    public function addTransaction(Transaction $transaction): self
+    {
+        if (!$this->transactions->contains($transaction)) {
+            $this->transactions[] = $transaction;
+            $transaction->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransaction(Transaction $transaction): self
+    {
+        if ($this->transactions->removeElement($transaction)) {
+            // set the owning side to null (unless already changed)
+            if ($transaction->getUser() === $this) {
+                $transaction->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 

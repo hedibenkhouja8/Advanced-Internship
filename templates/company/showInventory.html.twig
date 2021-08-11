@@ -25,31 +25,39 @@ th,h2,p,strong{color:#485785}
  
             <li class="nav-item">
               <a class="nav-link active cl" href="/company/inventory">
-                <span data-feather="home"></span> <i class="fas fa-running"></i>
+                <span data-feather="home"></span> <i class="fas fa-boxes"></i>
                 Inventory <span class="sr-only"></span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link cl" href="/company/product">
-                <span data-feather="file"></span><i class="fas fa-users"></i>
+                <span data-feather="file"></span><i class="fas fa-dolly-flatbed"></i>
                 Storage
               </a>
             </li>
-             <li class="nav-item">
-              <a class="nav-link cl" href="/company/licence">
-                <span data-feather="file"></span><i class="fas fa-users"></i>
-                Licences
-              </a>
-            </li>
-                <li class="nav-item">
+           <li class="nav-item">
               <a class="nav-link cl" href="/company/transaction">
-                <span data-feather="file"></span><i class="fas fa-user"></i>
+                <span data-feather="file"></span><i class="fas fa-shopping-cart"></i>
                Transactions
               </a>
             </li>
-           
-          </ul>
+            
+            </li>{% if  is_granted('ROLE_ADMIN') %}
+            <li class="nav-item">
+              <a class="nav-link cl" href="/company/licence">
+                <span data-feather="file"></span><i class="fas fa-stamp"></i>
+               Licences
+              </a>
+            </li>
+             
+            <li class="nav-item">
+              <a class="nav-link cl" href="/company/users">
+                <span data-feather="file"></span><i class="fas fa-users"></i>
+               Users
+              </a>
+            </li>
   
+            {% endif %}
         </div>
         <br> <br> <br> <br> <br> <br> <br> 
       </nav><br>  <br> <br> <br> <br> <br> <br> <br> 

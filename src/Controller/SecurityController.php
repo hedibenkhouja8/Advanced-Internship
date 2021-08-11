@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -24,18 +25,29 @@ class SecurityController extends AbstractController
     }*/
     
      /**
-     * @Route("/registration", name="security_registration")
+     * @Route("company/registration", name="security_registration")
      */
-public function registration(Request $request,EntityManagerInterface $manager,UserPasswordEncoderInterface $encoder ){
+public function registration(Request $request,EntityManagerInterface $manager,UserPasswordEncoderInterface $encoder,\Swift_Mailer $mailer ){
 $user = new User();
     $form= $this->createForm(RegistrationType::class,$user);
     $form->handleRequest($request);
+    $random = random_bytes(10);
+    $user->setPassword($random);
     if($form->isSubmitted()&& $form->isValid()){
         $hash = $encoder->encodePassword($user,$user->getPassword());
         $user->setPassword($hash);
+        $message = (new \Swift_Message('Confirmation Email'))
+        ->setFrom('hedibenkhouja9@gmail.com')
+        ->setTo($user->getEmail())
+        ->setBody( $user->getPassword() );
+     
+    
+    $mailer->send($message);
         $manager->persist($user);
         $manager->flush();
-        return $this->redirectToRoute('security_login');
+        return $this->redirectToRoute('company');
+        
+       
         }
         
     return $this->render('security/registration.html.twig',[
@@ -53,5 +65,36 @@ $user = new User();
      * @Route("/logout", name="security_logout")
      */
     public function logout(){
-          }
+ 
+   }
+
+
+
+
+   /**
+     * @Route("registration", name="admin_registration")
+     */
+   /* public function registrationadmin(Request $request,EntityManagerInterface $manager,UserPasswordEncoderInterface $encoder,\Swift_Mailer $mailer ){
+        $user = new User();
+      
+           
+        
+
+        $form = $this->createFormBuilder($user)
+            ->add('username', TextType::class)
+            ->add('email', TextType::class)
+            ->add('password', TextType::class)
+            ->getForm();
+                
+            return $this->render('security/registration.html.twig',[
+        
+                'form'=>$form->createView()
+            ]);
+        }
+*/
+   
 }
+
+
+
+

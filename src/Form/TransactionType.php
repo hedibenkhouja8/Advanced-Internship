@@ -25,6 +25,7 @@ class TransactionType extends AbstractType
                 ],
             ])
             ->add('note')
+           // ->add('User')
             ->add('quantity')
             ->add('TransactionDate', DateType::class, [
                 'widget' => 'single_text',

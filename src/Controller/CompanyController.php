@@ -2,31 +2,33 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Inventory;
-use App\Repository\InventoryRepository;
-use App\Repository\ProductRepository;
-use App\Repository\TransactionRepository;
+use App\Entity\User;
 use App\Entity\Licence;
-use App\Entity\Category;
 use App\Entity\Product;
-use App\Entity\Transaction;
-use App\Repository\LicenceRepository;
-use App\Form\InventoryType;
-use App\Form\TransactionType;
+use App\Entity\Category;
+use App\Entity\Inventory;
 use App\Form\LicenceType;
 use App\Form\ProductType;
+use App\Entity\Transaction;
+use App\Form\InventoryType;
+use App\Form\TransactionType;
+use App\Repository\UserRepository;
+use App\Repository\LicenceRepository;
+use App\Repository\ProductRepository;
+use App\Repository\InventoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TransactionRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CompanyController extends AbstractController
 {
@@ -47,18 +49,20 @@ class CompanyController extends AbstractController
             'transactions'=>$Transactions
         ]);
     }
-      /**
-     * @Route("/", name="recent_inventory")
-     */
-  /*  public function recentinventory(){
-       $repo =$this->getDoctrine()->getRepository(Licence::class);
-        $licences = $repo->findAll();
-    
-        return $this->render('company/index.html.twig', [
-          
-            'licences' => $licences
-        ]);
-    }*/
+    /**
+ * @Route("/company/users", name="users")
+ */
+public function usersList(UserRepository $repo,Request $request,PaginatorInterface $paginator)
+{  $Data = $repo->findAll();
+    $Users=$paginator->paginate(
+ $Data,
+ $request->query->getInt('page',1),
+ 10  );
+    return $this->render('company/users.html.twig', [
+        'users' => $Users
+    ]);
+}
+
   
      /**
      * @Route("/company/inventory", name="company_inventory")
@@ -224,20 +228,26 @@ class CompanyController extends AbstractController
               ]);
        }
        /**
-     * @Route("/company/transaction/new/", name="transaction_new")
+     * @Route("/company/transaction/new/{id}", name="transaction_new")
      
      */
-    public function formtransaction(Transaction $transaction = null , Request $request,EntityManagerInterface $manager){
+    public function formtransaction(User $user,Transaction $transaction = null , Request $request,EntityManagerInterface $manager){
         if (!$transaction){
             $transaction=new Transaction();
            
         }
-   
+       
               $form=$this->createForm(TransactionType::class,$transaction);
               $form->handleRequest($request);
    
               if($form->isSubmitted()&& $form->isValid()){
+                  $transaction->setUser($user);
                   if(!$transaction->getId()){
+                /*    $id1=$transaction->getUser()->getId();
+                    $user = $this->getDoctrine()
+                    ->getRepository(User::class)
+                    ->find($id1 );
+                    $transaction->setUser($user);*/
                      $id=$transaction->getProduct()->getId();
                  $product = $this->getDoctrine()
                                  ->getRepository(Product::class)
@@ -349,6 +359,18 @@ $this->addFlash('success', 'Article Created! Knowledge is power!');
         $this->addFlash('success', 'Transaction Deleted!');
         
             }
+          /**
+     * @Route("/company/user/delete/{id}", name="user_delete")
+     * 
+     */
+    public function deleteUser(User $user){
+
+        $em =$this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute('users');
+        $this->addFlash('success', 'user Deleted!');
         
+            }
   
 }

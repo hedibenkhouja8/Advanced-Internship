@@ -19,30 +19,38 @@ th,h2{color:#485785}
  
             <li class="nav-item">
               <a class="nav-link active cl" href="/company/inventory">
-                <span data-feather="home"></span> <i class="fas fa-running"></i>
+                <span data-feather="home"></span> <i class="fas fa-boxes"></i>
                 Inventory <span class="sr-only"></span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link cl" href="/company/product">
-                <span data-feather="file"></span><i class="fas fa-users"></i>
+                <span data-feather="file"></span><i class="fas fa-dolly-flatbed"></i>
                 Storage
               </a>
             </li><li class="nav-item">
-              <a class="nav-link cl" href="/company/licence">
-                <span data-feather="file"></span><i class="fas fa-user"></i>
-               Licences
-              </a>
-            </li>
-               <li class="nav-item">
               <a class="nav-link cl" href="/company/transaction">
-                <span data-feather="file"></span><i class="fas fa-user"></i>
+                <span data-feather="file"></span><i class="fas fa-shopping-cart"></i>
                Transactions
               </a>
             </li>
-           
-          </ul>
+            
+            </li>{% if  is_granted('ROLE_ADMIN') %}
+            <li class="nav-item">
+              <a class="nav-link cl" href="/company/licence">
+                <span data-feather="file"></span><i class="fas fa-stamp"></i>
+               Licences
+              </a>
+            </li>
+             
+            <li class="nav-item">
+              <a class="nav-link cl" href="/company/users">
+                <span data-feather="file"></span><i class="fas fa-users"></i>
+               Users
+              </a>
+            </li>
   
+            {% endif %}
         </div>
         <br> <br> <br> <br> <br> <br> <br> 
       </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
@@ -65,14 +73,15 @@ th,h2{color:#485785}
     
     <p class="card-text"> Quantity :{{transaction.quantity}}</p>
     <p class="card-text">Note :{{transaction.note}}</p>
-    <p class="card-text">{{transaction.TransactionDate|date("m/d/Y") }}  <a href="{{path('transaction_delete',{'id':transaction.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger float-right">Delete</a></p>
-   
+    <p class="card-text">Transaction Date:{{transaction.TransactionDate|date("m/d/Y") }}  {% if  is_granted('ROLE_ADMIN') %}
+    <a href="{{path('transaction_delete',{'id':transaction.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger float-right">Delete</a></p>
+   {% endif %}
     
   </div>
 </div>
 <br> <br>
    {% endfor %}
-    </div>
+    </div>{% if  is_granted('ROLE_ADMIN') %}
     <div class="col-sm">
     <h5>These are the Licences that needs to be extended soon</h5><br>
       {% for licence in licences %}
@@ -84,8 +93,8 @@ th,h2{color:#485785}
     <h5 class="card-title">Licence Code code: {{licence.ProductName}}  </h5>
     <p class="card-text"> User:{{licence.Supplier}}</p>
     <p class="card-text"> Category  :{{licence.category.name }}</p>
-    <p class="card-text">Exiration Date :{{licence.ExpirationDate|date("m/d/Y") }}  </p><p><a href="{{path('licence_delete',{'id':licence.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger float-right">Delete</a> &nbsp; &nbsp; &nbsp;
-    &nbsp;<a href="{{path('licence_edit',{'id':licence.id})}}"  class="btn btn-warning float-right">Update</a></p>
+    <p class="card-text">Exiration Date :{{licence.ExpirationDate|date("m/d/Y") }}  </p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{path('licence_delete',{'id':licence.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger ">Delete</a>
+    &nbsp;<a href="{{path('licence_edit',{'id':licence.id})}}"  class="btn btn-warning ">Update</a></p>
    
     
   </div>
@@ -94,7 +103,7 @@ th,h2{color:#485785}
    
    
    {% endfor %}
-    </div>
+    </div>{% endif %}
     <div class="col-sm">
         <h5>These are the items that needs to be scanned</h5><br>
   {% for inventory in inventorys %}
@@ -106,8 +115,10 @@ th,h2{color:#485785}
     <h5 class="card-title">Equipment code:{{inventory.Equipment}}  </h5>
     <p class="card-text"> Location:{{inventory.Locaation}}</p>
     <p class="card-text"> Purchase Date :{{inventory.PurchaseDate|date("m/d/Y") }}</p>
-    <p class="card-text">Last Scan :{{inventory.LastScan|date("m/d/Y") }} </p><p> <a href="{{path('inventory_delete',{'id':inventory.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger float-right">Delete</a> &nbsp; &nbsp; &nbsp;
-    &nbsp;<a href="{{path('inventory_edit',{'id':inventory.id})}}"  class="btn btn-warning float-right">Update</a></p>
+    <p class="card-text">Last Scan :{{inventory.LastScan|date("m/d/Y") }} </p> 
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{path('inventory_edit',{'id':inventory.id})}}"  class="btn btn-warning ">Update</a>
+
+    <a href="{{path('inventory_delete',{'id':inventory.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger ">Delete</a></p>
    
     
   </div>
