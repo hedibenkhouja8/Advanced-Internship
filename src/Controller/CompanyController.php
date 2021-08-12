@@ -64,6 +64,9 @@ public function usersList(UserRepository $repo,Request $request,PaginatorInterfa
 }
 
   
+
+
+  
      /**
      * @Route("/company/inventory", name="company_inventory")
      */

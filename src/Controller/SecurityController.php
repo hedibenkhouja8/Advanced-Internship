@@ -23,7 +23,7 @@ class SecurityController extends AbstractController
             'controller_name' => 'SecurityController',
         ]);
     }*/
-    
+
      /**
      * @Route("company/registration", name="security_registration")
      */
@@ -31,18 +31,24 @@ public function registration(Request $request,EntityManagerInterface $manager,Us
 $user = new User();
     $form= $this->createForm(RegistrationType::class,$user);
     $form->handleRequest($request);
-    $random = random_bytes(10);
-    $user->setPassword($random);
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < 10; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+   
+    $user->setPassword($randomString);
     if($form->isSubmitted()&& $form->isValid()){
         $hash = $encoder->encodePassword($user,$user->getPassword());
-        $user->setPassword($hash);
+       
         $message = (new \Swift_Message('Confirmation Email'))
-        ->setFrom('hedibenkhouja9@gmail.com')
+        ->setFrom('samirtondo@gmail.com')
         ->setTo($user->getEmail())
         ->setBody( $user->getPassword() );
      
     
-    $mailer->send($message);
+    $mailer->send($message); $user->setPassword($hash);
         $manager->persist($user);
         $manager->flush();
         return $this->redirectToRoute('company');

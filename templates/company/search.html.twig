@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<style>
+a{color:black;}
+th,h2{color:#485785}
+.b{padding-left:400px;}
+</style><section id="main-content">
+	<section class="wrapper">
+		<div class="table-agile-info">  <a href="{{path("product_new")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add a Product</a>
+<br><br><br>
+ <div class="panel panel-default">
+    <div class="panel-heading">
+     Inventory
+    </div>
+    <div>
+      <table class="table" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr> <th scope="col">ID</th>
+      <th scope="col">Reference</th>
+      <th scope="col">Stocking Area</th>
+      
+       <th scope="col">Manufacturer</th>
+      <th scope="col">Quantity</th>
+       <th scope="col">Description</th>
+       <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+      {% for product in products %}
+    <tr>
+    <td scope="row">{{product.id}}</th>
+      <td scope="row">{{product.reference}}</th>
+        <td>{{product.StockingArea}}</td>
+      <td>{{product.manufacturer}}</td>
+      
+     
+    
+        <td>{{product.quantity}}</td>
+      <td>{{product.description}}</td>
+      
+       <td> <a href="{{path('product_show',{'id':product.id})}}"><i class="far fa-eye"></i></a>
+          
+           <a href="{{path('product_edit',{'id':product.id})}}" ><i class="fas fa-edit"></i> </a>
+           </td>
+    </tr>
+   {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</section>
+     <div class="container">
+  
+ 
+<div class="navigation b">
+    {{ knp_pagination_render(inventorys) }}
+</div>
+
+
+</div>
+  
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/main.js') }}"></script>
+<script>
+function myFunction() {
+  alert("Equipment is Now being deleted");
+}
+</script>
+
+{% endblock %}
+		<div class="market-update-block clr-block-1">
+					<div class="col-md-4 market-update-right">
+						<i class="fa fa-users" ></i>
+					</div>
+					<div class="col-md-8 market-update-left">
+					<h4>Users</h4>
+						<h3>1,250</h3>
+						<p>Other hand, we denounce</p>
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+			<br><br>
+   

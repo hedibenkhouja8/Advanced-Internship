@@ -1,55 +1,6 @@
 {% extends 'base.html.twig' %}
 {% form_theme formTransaction 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-<div class="container-fluid">
-    <div class="row">
-      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div class="sidebar-sticky pt-3">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active cl" href="/">
-                <span data-feather="home"></span><i class="fas fa-home"></i>
-               home<span class="sr-only"></span>
-              </a>
-            </li>
- 
-            <li class="nav-item">
-              <a class="nav-link active cl" href="/company/inventory">
-                <span data-feather="home"></span> <i class="fas fa-boxes"></i>
-                Inventory <span class="sr-only"></span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link cl" href="/company/product">
-                <span data-feather="file"></span><i class="fas fa-dolly-flatbed"></i>
-                Storage
-              </a>
-            </li><li class="nav-item">
-              <a class="nav-link cl" href="/company/transaction">
-                <span data-feather="file"></span><i class="fas fa-shopping-cart"></i>
-               Transactions
-              </a>
-            </li>
-            
-            </li>{% if  is_granted('ROLE_ADMIN') %}
-            <li class="nav-item">
-              <a class="nav-link cl" href="/company/licence">
-                <span data-feather="file"></span><i class="fas fa-stamp"></i>
-               Licences
-              </a>
-            </li>
-             
-            <li class="nav-item">
-              <a class="nav-link cl" href="/company/users">
-                <span data-feather="file"></span><i class="fas fa-users"></i>
-               Users
-              </a>
-            </li>
-  
-            {% endif %}
-        </div>
-        <br> <br> <br> <br> <br> <br> <br> 
-      </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
       <style>
       .blue{
         float:right;
@@ -68,10 +19,13 @@
       
       h2{color:#485785}</style>
      
-<div class="Container space">
+
+     <section id="main-content">
+	<section class="wrapper">
+  <div class="table-agile-info">
  
 <h2 >Choose a Product and make your New  Transaction</h2>
-
+<br>
 {{form_start(formTransaction)}}
 {{form_row(formTransaction.TransactionDate)}}
 {{form_row(formTransaction.product,{'attr':{'placeholder':'Product Name','class':"blue"}})}}
@@ -87,6 +41,9 @@
 <button type="submit" class=" btn btn-info btn-lg float-right">
 Make Transaction
 </button>{{form_end(formTransaction)}}
-<br><br><br><br>
+<br><br>
 </div>
+</section>
+<br><br><br><br>
+</section>
 {% endblock %}

@@ -3,67 +3,29 @@
 <style>
 a{color:black;}
 th,h2{color:#485785}
-.b{padding-left:400px;}
-</style>
-<div class="container-fluid">
-    <div class="row">
-      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div class="sidebar-sticky pt-3">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active cl" href="/">
-                <span data-feather="home"></span><i class="fas fa-home"></i>
-               home<span class="sr-only"></span>
-              </a>
-            </li>
- 
-            <li class="nav-item">
-              <a class="nav-link active cl" href="/company/inventory">
-                <span data-feather="home"></span> <i class="fas fa-boxes"></i>
-                Inventory <span class="sr-only"></span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link cl" href="/company/product">
-                <span data-feather="file"></span><i class="fas fa-dolly-flatbed"></i>
-                Storage
-              </a>
-            </li>
-             <li class="nav-item">
-              <a class="nav-link cl" href="/company/transaction">
-                <span data-feather="file"></span><i class="fas fa-shopping-cart"></i>
-               Transactions
-              </a>
-            </li>
-            
-            </li>{% if  is_granted('ROLE_ADMIN') %}
-            <li class="nav-item">
-              <a class="nav-link cl" href="/company/licence">
-                <span data-feather="file"></span><i class="fas fa-stamp"></i>
-               Licences
-              </a>
-            </li>
-             
-            <li class="nav-item">
-              <a class="nav-link cl" href="/company/users">
-                <span data-feather="file"></span><i class="fas fa-users"></i>
-               Users
-              </a>
-            </li>
-         
-            
-            
-            {% endif %}
-        </div>
-        <br> <br> <br> <br> <br> <br> <br> 
-      </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
-     <div class="container">
+.b{padding-left:700px;}
+</style><section id="main-content">
+	<section class="wrapper">
+		<div class="table-agile-info">
      <h2>These are your Available Licences :</h2>
        <a href="{{path("licence_new")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add a Licence</a>
-<br><br>
-     <table class="table table-striped table-bordered border-primary table-active containerr">
-     <br>
-  <thead class="thead-type table-primary">
+<br><br><br>
+ <div class="panel panel-default">
+    <div class="panel-heading">
+     Licences
+    </div>
+    <div>
+      <table class="table" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
     <tr>
       <th scope="col">Product Name</th>
       <th scope="col">Supplier</th>
@@ -98,6 +60,8 @@ th,h2{color:#485785}
    {% endfor %}
   </tbody>
 </table>
+</div>
+</section></section>
 <div class="navigation b">
     {{ knp_pagination_render(licences) }}
 </div>

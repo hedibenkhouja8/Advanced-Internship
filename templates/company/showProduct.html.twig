@@ -11,61 +11,15 @@ th,h2,p,strong{color:#485785}
       .print-container, .print-container *{visibility: visible;}
     }
 </style>
-<div class="container-fluid">
-    <div class="row">
-      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div class="sidebar-sticky pt-3">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active cl" href="/">
-                <span data-feather="home"></span><i class="fas fa-home"></i>
-               home<span class="sr-only"></span>
-              </a>
-            </li>
- 
-            <li class="nav-item">
-              <a class="nav-link active cl" href="/company/inventory">
-                <span data-feather="home"></span> <i class="fas fa-boxes"></i>
-                Inventory <span class="sr-only"></span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link cl" href="/company/product">
-                <span data-feather="file"></span><i class="fas fa-dolly-flatbed"></i>
-                Storage
-              </a>
-            </li>
-           <li class="nav-item">
-              <a class="nav-link cl" href="/company/transaction">
-                <span data-feather="file"></span><i class="fas fa-shopping-cart"></i>
-               Transactions
-              </a>
-            </li>
-            
-            </li>{% if  is_granted('ROLE_ADMIN') %}
-            <li class="nav-item">
-              <a class="nav-link cl" href="/company/licence">
-                <span data-feather="file"></span><i class="fas fa-stamp"></i>
-               Licences
-              </a>
-            </li>
-             
-            <li class="nav-item">
-              <a class="nav-link cl" href="/company/users">
-                <span data-feather="file"></span><i class="fas fa-users"></i>
-               Users
-              </a>
-            </li>
-  
-            {% endif %}
-        </div>
-        <br> <br> <br> <br> <br> <br> <br> 
-      </nav><br>  <br> <br> <br> <br> <br> <br> <br> 
-     <div class="container "> <h2><i class="fas fa-info-circle"></i> Details about your Licence : <strong></strong></h2>
+
+<section id="main-content">
+	<section class="wrapper">
+		<div class="table-agile-info">
+     <div class="container "> <h2><i class="fas fa-info-circle"></i> Details about your Licence : <strong></strong></h2><br><br>
   
      <div class="card text-center">
     
-  <div class="card-header print-container">
+  <div class="card-header print-container panel-heading">
    <strong> Product   {{product.id}}</strong>
   </div>
   <div class="card-body print-container">
@@ -79,7 +33,7 @@ th,h2,p,strong{color:#485785}
   <div class="card-footer text-muted">
   <a href="{{path('product_edit',{'id':product.id})}}" class="btn btn-warning" title="" >
   
-                <i class="fas fa-user-edit"></i>
+                <i class="fas fa-edit"></i>
                 
             </a>
             
@@ -95,6 +49,7 @@ th,h2,p,strong{color:#485785}
      <br><br>
    
 </div>
+</section></section></div><br><br><br>
 
 {% endblock %}
 {% block javascripts %}
