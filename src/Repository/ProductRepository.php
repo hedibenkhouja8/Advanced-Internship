@@ -19,9 +19,20 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+       
+    public function findLowQuality()
+    {
+        return $this->createQueryBuilder('i')
+           
+            ->orderBy('i.quantity', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     /*
     public function findByExampleField($value)
     {

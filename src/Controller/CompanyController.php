@@ -36,17 +36,19 @@ class CompanyController extends AbstractController
     /**
      * @Route("/", name="company")
      */
-    public function index(InventoryRepository $repo, LicenceRepository $repoo, TransactionRepository $repooo): Response
+    public function index(InventoryRepository $repo, LicenceRepository $repoo, TransactionRepository $repooo,ProductRepository $repoooo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $Inventorys = $repo->findOldItems();
         $Licences = $repoo->findOldLicences();
         $Transactions=$repooo->findRecentTransactions();
+        $Products=$repoooo->findLowQuality();
         return $this->render('company/index.html.twig', [
             'controller_name' => 'CompanyController',
             'inventorys' => $Inventorys,
             'licences' => $Licences,
-            'transactions'=>$Transactions
+            'transactions'=>$Transactions,
+            'products'=>$Products
         ]);
     }
     /**
