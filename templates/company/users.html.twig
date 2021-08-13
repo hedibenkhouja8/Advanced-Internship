@@ -20,6 +20,7 @@ color:red;}
 		<div class="table-agile-info2">
    
      <h2>These are the other users:</h2>
+     <h7>Notice : To delete a user u must delete his transactions</h7>
        <a href="{{path("security_registration")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add User</a>
 <br><br><form method="POST">
 <input type="text" name="name">
@@ -30,17 +31,17 @@ color:red;}
                             <table class="table table-inbox table-hover">
                                <thead>
     <tr>
-      <th scope="col">Favorites</th>
+      <th scope="col">Transactions</th>
       <th scope="col">User Name</th>
       <th scope="col">Email</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
-                        <tbody>make them see each one transactions
+                        <tbody>
                       {% for user in users %}
     <tr>
     
-                            <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+                            <td class="inbox-small-cells">  <a href="{{path('company_user_transaction',{'id':user.id})}}" ><i class="fas fa-history" ></i></a></td>
       <td scope="row">{{user.username}}</th>
       <td>{{user.email}}</td>{% if user.transactions|length > 0 %}<td> {{user.transactions|length }} Transactions</td>{% else %}
            <td>

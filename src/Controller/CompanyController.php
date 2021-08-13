@@ -151,6 +151,24 @@ public function usersList(TransactionRepository $rep,UserRepository $repo,Reques
             'reference'=>$Reference
         ]);
     }
+    /**
+     * @Route("/company/user/transaction/{id}", name="company_user_transaction")
+     */
+    public function transactionUser(int $id,Request $request,PaginatorInterface $paginator ){
+        $Transactions = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find($id)->getTransactions();
+        $Username = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find($id)->getUsername();
+       // $Transactions = $repo->findBy();
+     
+        return $this->render('company/showUserTransactions.html.twig', [
+            'controller_name' => 'CompanyController',
+            'transactions'=> $Transactions,
+            'username'=>$Username
+        ]);
+    }
      /**
      * @Route("/company/product", name="company_product")
      */
@@ -303,8 +321,14 @@ public function usersList(TransactionRepository $rep,UserRepository $repo,Reques
                                     ;
                                 
                                 
-                                }else{$product->setQuantity($product->getQuantity()-$transaction->getquantity())
-                                    ;}
+                                }elseif($transaction->getType()=='Output'){
+                                    if($transaction->getquantity()>$product->getQuantity()){
+                                        $product->setQuantity(0);
+                                    }else{
+                                        $product->setQuantity($product->getQuantity()-$transaction->getquantity());
+                                    
+                                    }
+                                    }
                                 }              
                   
                       $transaction->setCreatedAt(new \DateTimeImmutable());
@@ -453,6 +477,7 @@ $this->addFlash('success', 'Article Created! Knowledge is power!');
         $this->addFlash('success', 'Transaction Deleted!');
         
             }
+            
           /**
      * @Route("/company/user/delete/{id}", name="user_delete")
      * 
