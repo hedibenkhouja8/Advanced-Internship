@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% form_theme formEmail 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+      <style>
+      .blue{
+        float:right;
+     
+          margin-bottom:10px;
+          margin-left:400px;
+      }
+        .space{
+        float:right;
+      
+          margin-left:150px;
+      }
+      .a{
+          float:right;
+      }
+      h2{color:#485785}</style>
+     <section id="main-content">
+	<section class="wrapper">
+  <div class="table-agile-info">
+ 
+<h2>Report a problem</h2>
+
+{{form_start(formEmail)}}
+<hr>{{form_row(formEmail.Subject,{'attr':{'placeholder':'Equipement Code','class':"blue"}})}}
+{{form_row(formEmail.Content,{'attr':{'placeholder':'User name','class':"blue"}})}}<hr>
+
+<br><br>
+<button type="submit" class=" btn btn-info btn-lg float-right">
+Report !
+</button>
+{{form_end(formEmail)}}<br><br><br><br></div><br><br><br><br><br><br><br><br>
+</section>
+</section>
+{% endblock %}

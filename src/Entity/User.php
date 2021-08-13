@@ -57,9 +57,15 @@ class User implements UserInterface
      */
     private $transactions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Email::class, mappedBy="user")
+     */
+    private $emails;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
+        $this->emails = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -144,6 +150,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($transaction->getUser() === $this) {
                 $transaction->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Email[]
+     */
+    public function getEmails(): Collection
+    {
+        return $this->emails;
+    }
+
+    public function addEmail(Email $email): self
+    {
+        if (!$this->emails->contains($email)) {
+            $this->emails[] = $email;
+            $email->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmail(Email $email): self
+    {
+        if ($this->emails->removeElement($email)) {
+            // set the owning side to null (unless already changed)
+            if ($email->getUser() === $this) {
+                $email->setUser(null);
             }
         }
 

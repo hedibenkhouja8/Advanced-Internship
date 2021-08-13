@@ -15,8 +15,63 @@ th,h2{color:#485785}
 .b{padding-left:400px;}
 </style>
     
+{% if  is_granted('ROLE_ADMIN') %}
 <section id="main-content">
 	<section class="wrapper">
+  <div class="agil-info-calendar">
+		<!-- calendar -->
+		<div class="col-md-6 agile-calendar">
+			<div class="calendar-widget">
+                <div class="panel-heading ui-sortable-handle">
+					<span class="panel-icon">
+                      <i class="fa fa-calendar-o"></i>
+                    </span>
+                    <span class="panel-title"> Calendar Widget</span>
+                </div>
+				<!-- grids -->
+					<div class="agile-calendar-grid">
+						<div class="page">
+							
+							<div class="w3l-calendar-left">
+								<div class="calendar-heading">
+									
+								</div>
+								<div class="monthly" id="mycalendar"></div>
+							</div>
+							
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+			</div>
+		</div><div class="col-md-6 w3agile-notifications">
+			<div class="notifications">
+				<!--notification start-->
+				
+					<header class="panel-heading">
+					Recent Reports
+					</header>{% for email in emails %}
+					<div class="notify-w3ls">
+						<div class="alert alert-info clearfix">
+							<span class="alert-icon"><i class="fa fa-envelope"></i></span>
+							<div class="notification-info">
+								<ul class="clearfix notification-meta">
+									<li class="pull-left notification-sender"><span><a href="{{path('email_show',{'id':email.id})}}">{{email.user.username}}</a></span> sent you a report </li>
+									<li class="pull-right notification-time">{{email.CreatedAt|date("m/d/Y") }}</li>
+								</ul>
+								<p>
+								{{email.content}}
+								</p>
+							</div>
+						</div>
+					{% endfor %}
+				
+				<!--notification end-->
+				</div>
+			</div>
+</section></section></div>{% endif %}
+<section id="main-content">
+{% if  is_granted('ROLE_ADMIN') %}
+	<section class="wrappera">{% else %} <section class="wrapper">{% endif %}
 		<div class="table-agile-info">
    
    
@@ -117,33 +172,7 @@ th,h2{color:#485785}
   </div>
   
 </div></div>
-  <div class="agil-info-calendar">
-		<!-- calendar -->
-		<div class="col-md-6 agile-calendar">
-			<div class="calendar-widget">
-                <div class="panel-heading ui-sortable-handle">
-					<span class="panel-icon">
-                      <i class="fa fa-calendar-o"></i>
-                    </span>
-                    <span class="panel-title"> Calendar Widget</span>
-                </div>
-				<!-- grids -->
-					<div class="agile-calendar-grid">
-						<div class="page">
-							
-							<div class="w3l-calendar-left">
-								<div class="calendar-heading">
-									
-								</div>
-								<div class="monthly" id="mycalendar"></div>
-							</div>
-							
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-			</div>
-		</div>
-    <br><br>
+</div>
 </section></section></div>
 
    {% endblock %}

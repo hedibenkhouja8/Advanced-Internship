@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Email;
 use App\Entity\Licence;
 use App\Entity\Product;
+use App\Form\EmailType;
 use App\Entity\Category;
 use App\Entity\Inventory;
 use App\Form\LicenceType;
@@ -13,6 +15,7 @@ use App\Entity\Transaction;
 use App\Form\InventoryType;
 use App\Form\TransactionType;
 use App\Repository\UserRepository;
+use App\Repository\EmailRepository;
 use App\Repository\LicenceRepository;
 use App\Repository\ProductRepository;
 use App\Repository\InventoryRepository;
@@ -36,19 +39,21 @@ class CompanyController extends AbstractController
     /**
      * @Route("/", name="company")
      */
-    public function index(InventoryRepository $repo, LicenceRepository $repoo, TransactionRepository $repooo,ProductRepository $repoooo): Response
+    public function index(EmailRepository $rep,InventoryRepository $repo, LicenceRepository $repoo, TransactionRepository $repooo,ProductRepository $repoooo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $Inventorys = $repo->findOldItems();
         $Licences = $repoo->findOldLicences();
         $Transactions=$repooo->findRecentTransactions();
         $Products=$repoooo->findLowQuality();
+        $Emails=$rep->findNewReports();
         return $this->render('company/index.html.twig', [
             'controller_name' => 'CompanyController',
             'inventorys' => $Inventorys,
             'licences' => $Licences,
             'transactions'=>$Transactions,
-            'products'=>$Products
+            'products'=>$Products,
+           'emails'=>$Emails
         ]);
     }
     /**
@@ -143,7 +148,24 @@ public function usersList(UserRepository $repo,Request $request,PaginatorInterfa
             'products'=> $Products
         ]);
     }
-      
+/**
+     * @Route("/company/email", name="company_email")
+     */
+    public function email(EmailRepository $repo,Request $request,PaginatorInterface $paginator ){
+       
+        $Data = $repo->findAll();
+        $Emails=$paginator->paginate(
+     $Data,
+     $request->query->getInt('page',1),
+     10
+
+
+        );
+        return $this->render('company/email.html.twig', [
+            'controller_name' => 'CompanyController',
+            'emails'=> $Emails
+        ]);
+    }
      /**
      * @Route("/company/inventory/new", name="inventory_new")
      * @Route("/company/inventory/{id}/edit", name="inventory_edit")
@@ -248,11 +270,7 @@ public function usersList(UserRepository $repo,Request $request,PaginatorInterfa
               if($form->isSubmitted()&& $form->isValid()){
                   $transaction->setUser($user);
                   if(!$transaction->getId()){
-                /*    $id1=$transaction->getUser()->getId();
-                    $user = $this->getDoctrine()
-                    ->getRepository(User::class)
-                    ->find($id1 );
-                    $transaction->setUser($user);*/
+              
                      $id=$transaction->getProduct()->getId();
                  $product = $this->getDoctrine()
                                  ->getRepository(Product::class)
@@ -267,15 +285,9 @@ public function usersList(UserRepository $repo,Request $request,PaginatorInterfa
                                 }else{$product->setQuantity($product->getQuantity()-$transaction->getquantity())
                                     ;}
                                 }              
-                  /*    $em = $this->getDoctrine()->getManager();
-
-                      $T = $em->getRepository('ProductRepository:Product')->find($id);
-                      */
+                  
                       $transaction->setCreatedAt(new \DateTimeImmutable());
-                   //   $transaction->setproduct()->setquantity();
-                   /*   $RAW_QUERY = 'UPDATE Product
-                      SET quantiy = quantity+$
-                      WHERE CustomerID = 1;';*/
+                 
                   }
                   $manager->persist($transaction);
                   $manager->flush();
@@ -286,6 +298,50 @@ public function usersList(UserRepository $repo,Request $request,PaginatorInterfa
    
               return $this->render('company/createTransaction.html.twig',[
                'formTransaction'=> $form->CreateView()
+   
+              ]);
+       }
+           /**
+     * @Route("/company/email/new/{id}", name="email_new")
+     
+     */
+    public function formemail(User $user,Email $email = null , Request $request,EntityManagerInterface $manager,\Swift_Mailer $mailer ){
+        if (!$email){
+            $email=new Email();
+           
+        }
+       
+              $form=$this->createForm(EmailType::class,$email);
+              $form->handleRequest($request);
+   
+              if($form->isSubmitted()&& $form->isValid()){
+                  $email->setUser($user);
+                  $email->setEmail($user->getEmail());
+                          
+        $message = (new \Swift_Message($email->getSubject()))
+        ->setFrom('samirtondo@gmail.com')
+        ->setTo('hedibenkhouja3@gmail.com')
+    
+        ->setBody( $email->getContent() );
+     
+    
+    $mailer->send($message);
+                  if(!$email->getId()){
+                      $email->setCreatedAt(new \DateTimeImmutable());
+                 
+                  }
+                  $manager->persist($email);
+                  $manager->flush();
+                  $this->addFlash(
+                    'notice',
+                    'Your changes were saved!'
+                );
+                   return $this->redirectToRoute('company');
+                }
+              
+   
+              return $this->render('company/createEmail.html.twig',[
+               'formEmail'=> $form->CreateView()
    
               ]);
        }
@@ -321,6 +377,18 @@ public function usersList(UserRepository $repo,Request $request,PaginatorInterfa
         return $this->render('company/showProduct.html.twig', [
            
             'product'=> $product
+        ]);
+
+
+    }
+      /**
+     * @Route("/company/email/{id}", name="email_show")
+     */
+    public function showemail(Email $email){
+       
+        return $this->render('company/showEmail.html.twig', [
+           
+            'email'=> $email
         ]);
 
 
@@ -375,6 +443,20 @@ $this->addFlash('success', 'Article Created! Knowledge is power!');
         $em->flush();
         return $this->redirectToRoute('users');
         $this->addFlash('success', 'user Deleted!');
+        
+            }
+
+                /**
+     * @Route("/company/email/delete/{id}", name="email_delete")
+     * 
+     */
+    public function deleteEmail(Email $email){
+
+        $em =$this->getDoctrine()->getManager();
+        $em->remove($email);
+        $em->flush();
+        return $this->redirectToRoute('company_email');
+        $this->addFlash('success', 'email Deleted!');
         
             }
   

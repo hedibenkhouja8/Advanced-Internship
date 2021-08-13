@@ -13,7 +13,7 @@ html, body{
 	font-family: 'Roboto', sans-serif;
     font-size: 100%;
     overflow-x: hidden;
-    background: url(../images/bg.jpg) no-repeat 0px 0px;
+    background: url(../images/bgg.jpg) no-repeat 0px 0px;
 	background-size:cover;
 }
 body a{
@@ -235,6 +235,12 @@ ul.sidebar-menu li a.active i {
 .wrapper {
     display:inline-block;
     margin-top:80px;
+    padding:15px;
+    width:100%;
+}
+.wrappera {
+    display:inline-block;
+    margin-top:-20px;
     padding:15px;
     width:100%;
 }

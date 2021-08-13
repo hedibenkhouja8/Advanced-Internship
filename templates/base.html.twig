@@ -146,7 +146,7 @@
         {% endblock %}
 
     </head>
-    <body>
+    <body >
     <style>
 .c{ text-transform: uppercase;}</style>
   <section id="container">
@@ -165,9 +165,9 @@
        
         <!-- user login dropdown start-->
         <li >
-       <!--     <a  href="{{path('security_logout')}}">-->
+     
                 <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="{{path('company')}}">
                
                 <span class="username c"> &nbsp;{{app.user.username}}</span>
              
@@ -232,6 +232,22 @@
                         <span>Users </span>
                     </a>
                   
+                </li>
+                 <li class="sub-menu">
+                    <a href="/company/email">
+                        <i class="fa fa-inbox"></i>
+                        <span>Inbox </span>
+                    </a>
+                  
+                </li>
+                
+                {% else %}
+                   <li class="sub-menu">
+                    <a href="{{path('email_new',{'id':app.user.id})}}">
+                        <i class="fa fa-bullhorn"></i>
+                        <span>Report a Problem </span>
+                    </a>
+                  
                 </li>{% endif %}
                 
             </ul>            </div>
@@ -242,7 +258,11 @@
 <!--main content start-->
 
         {% block body %}
-      
+      {% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
         {% endblock %}
         </section>
         </section>
