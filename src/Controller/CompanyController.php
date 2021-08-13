@@ -59,14 +59,18 @@ class CompanyController extends AbstractController
     /**
  * @Route("/company/users", name="users")
  */
-public function usersList(UserRepository $repo,Request $request,PaginatorInterface $paginator)
-{  $Data = $repo->findAll();
+public function usersList(TransactionRepository $rep,UserRepository $repo,Request $request,PaginatorInterface $paginator)
+{ 
+    $Transactions =$rep->findAll();
+    $Data = $repo->findAll();
     $Users=$paginator->paginate(
  $Data,
  $request->query->getInt('page',1),
  10  );
     return $this->render('company/users.html.twig', [
-        'users' => $Users
+        'users' => $Users,
+        'transactions' => $Transactions
+
     ]);
 }
 
@@ -129,7 +133,24 @@ public function usersList(UserRepository $repo,Request $request,PaginatorInterfa
             'transactions'=> $Transactions
         ]);
     }
-
+  /**
+     * @Route("/company/product/transaction/{id}", name="company_product_transaction")
+     */
+    public function transactionProduct(int $id,Request $request,PaginatorInterface $paginator ){
+        $Transactions = $this->getDoctrine()
+        ->getRepository(Product::class)
+        ->find($id)->getTransactions();
+        $Reference = $this->getDoctrine()
+        ->getRepository(Product::class)
+        ->find($id)->getReference();
+       // $Transactions = $repo->findBy();
+     
+        return $this->render('company/showProductTransactions.html.twig', [
+            'controller_name' => 'CompanyController',
+            'transactions'=> $Transactions,
+            'reference'=>$Reference
+        ]);
+    }
      /**
      * @Route("/company/product", name="company_product")
      */

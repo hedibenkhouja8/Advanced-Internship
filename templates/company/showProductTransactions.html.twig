@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<style>
+a{color:black;}
+th,h2{color:#485785}
+.b{padding-left:700px;}
+
+}
+
+</style>
+     <section id="main-content">
+	<section class="wrapper">
+  <div class="table-agile-info">
+     <h2>These are The  Transactions made on product : {{reference}}</h2>
+       <a href="{{path("transaction_new",{'id':app.user.id})}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Create a New Transaction</a>
+<br><br>
+    <br>
+  {% for transaction in transactions %}
+    <div class="card">
+  <div class="card-header panel-heading">
+   <strong> {{transaction.type}}</strong>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Reference:{{transaction.product.reference}}  <p class="float-right"> UserName:{{transaction.user.username}}</p></h5>
+   
+    <p class="card-text"> Quantity :{{transaction.quantity}}</p>
+    
+    
+     <p class="card-text"> Note :{{transaction.note}}</p>
+    <p class="card-text">{{transaction.TransactionDate|date("m/d/Y") }} {% if  is_granted('ROLE_ADMIN') %} <a href="{{path('transaction_delete',{'id':transaction.id})}}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger float-right">Delete</a></p>
+   
+    {% endif %}
+  </div>
+</div>
+<br> <br>
+   {% endfor %}
+ 
+
+</section>
+</section>
+</div>
+
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/main.js') }}"></script>
+<script>
+function myFunction() {
+  alert("Equipment is Now being deleted");
+}
+</script>
+
+{% endblock %}

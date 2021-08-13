@@ -36,19 +36,18 @@ color:red;}
       <th scope="col">Actions</th>
     </tr>
   </thead>
-                        <tbody>
+                        <tbody>make them see each one transactions
                       {% for user in users %}
     <tr>
     
                             <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
       <td scope="row">{{user.username}}</th>
-      <td>{{user.email}}</td>
-     
-           <td><a href="{{path('user_delete',{'id':user.id})}}" onclick="return confirm('Are you sure you want to delete this account?');"><i class="fas fa-envelope"></i> </a>
-           {% if user.transactions != null %}{% else %}
-          <a href="{{path('user_delete',{'id':user.id})}}" onclick="return confirm('Are you sure you want to delete this account?');"><i class="fas fa-trash"></i> </a>
-         {% endif %} </td>
+      <td>{{user.email}}</td>{% if user.transactions|length > 0 %}<td> {{user.transactions|length }} Transactions</td>{% else %}
+           <td>
           
+          <a href="{{path('user_delete',{'id':user.id})}}" onclick="return confirm('Are you sure you want to delete this account?');"><i class="fas fa-trash"></i> </a>
+        </td>
+          {% endif %}
     </tr>
    {% endfor %}
                            

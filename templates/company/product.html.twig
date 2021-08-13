@@ -26,7 +26,7 @@ th,h2{color:#485785}
           "enabled": true
         }}'>
         <thead>
-          <tr> <th scope="col">ID</th>
+          <tr>
       <th scope="col" >Reference</th>
       <th scope="col">Stocking Area</th>
       
@@ -39,7 +39,6 @@ th,h2{color:#485785}
         <tbody>
       {% for product in products %}
     <tr>
-    <td scope="row">{{product.id}}</th>
       <td scope="row" >{{product.reference}}</th>
         <td>{{product.StockingArea}}</td>
       <td>{{product.manufacturer}}</td>
@@ -50,8 +49,10 @@ th,h2{color:#485785}
       <td>{{product.description}}</td>
       
        <td> <a href="{{path('product_show',{'id':product.id})}}"><i class="far fa-eye"></i></a>
-          
            <a href="{{path('product_edit',{'id':product.id})}}" ><i class="fas fa-edit"></i> </a>
+           
+          <a href="{{path('company_product_transaction',{'id':product.id})}}" ><i class="fas fa-history" ></i></a>
+          
            </td>
     </tr>
    {% endfor %}
