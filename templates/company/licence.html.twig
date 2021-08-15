@@ -9,7 +9,25 @@ th,h2{color:#485785}
 		<div class="table-agile-info">
      <h2>These are your Available Licences :</h2>
        <a href="{{path("licence_new")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add a Licence</a>
-<br><br><br>
+<br><br><br>{{form_start(form)}}
+
+    <div class="form-row align-items-end">
+    <div class="col-sm">
+      {{form_row(form.user)}}
+    </div>
+    <div class="col-sm">
+      {{form_row(form.compilancetype)}}
+    </div>
+    <div class="form-group">
+    <button class=" btn search">
+                        <i class="fa fa-search"></i></button>
+    
+     {{form_end(form)}}
+     
+    
+    <a class="btn search" href='/company/product'>
+                        <i class="fa fa-redo"></i></button></a></div>
+ </div>
  <div class="panel panel-default">
     <div class="panel-heading">
      Licences

@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Licence;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\LicenceSearch;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Licence|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,6 +20,35 @@ class LicenceRepository extends ServiceEntityRepository
         parent::__construct($registry, Licence::class);
     }
 
+     /**
+      * @return Licence[] Returns an array of Licence objects
+    */
+    public function findAllVisibleQuery(LicenceSearch $search)
+    {
+        
+     //   $entityManager = $this->getEntityManager();
+//$k = $entityManager->createQuery('SELECT count(transactions)  FROM App\Entity\Products ');
+
+        $qb = $this->createQueryBuilder('l');
+        if($search->getuser()){
+            $qb =$qb
+                ->andwhere('l.User LIKE :user')
+                ->setParameter('user','%'.$search->getuser().'%');
+
+        }
+        if($search->getcompilancetype()){
+            $qb =$qb
+                ->andwhere('l.Compilance_type LIKE :compilancetype')
+                ->setParameter('compilancetype',$search->getcompilancetype());
+
+        }
+       
+           $query=$qb->getQuery();
+           return $query->execute();
+                        
+    }
+
+    
      /**
       * @return Licence[] Returns an array of Licence objects
     */

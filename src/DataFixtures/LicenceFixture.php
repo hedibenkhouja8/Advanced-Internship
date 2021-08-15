@@ -23,7 +23,7 @@ class LicenceFixture extends Fixture
         for($i=0;$i<10;$i++){
         
             $licence= new Licence();
-            $licence->setProductName($faker->word);
+            $licence->setProductName($faker->randomElement($array = array ('Windows','Solidworks','Photoshop')));
             $licence->setSupplier($faker->name);
             $licence->setCompilanceType($faker->randomElement($array = array ('Normal','Pro')));
             $licence->setUser($faker->randomElement($array = array ('Mohamed','Ahmed','Sarah')));

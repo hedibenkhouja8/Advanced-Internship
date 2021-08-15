@@ -13,7 +13,11 @@ use App\Form\LicenceType;
 use App\Form\ProductType;
 use App\Entity\Transaction;
 use App\Form\InventoryType;
+use App\Entity\LicenceSearch;
 use App\Form\TransactionType;
+use App\Entity\PropertySearch;
+use App\Form\LicenceSearchType;
+use App\Form\PropertySearchType;
 use App\Repository\UserRepository;
 use App\Repository\EmailRepository;
 use App\Repository\LicenceRepository;
@@ -39,21 +43,32 @@ class CompanyController extends AbstractController
     /**
      * @Route("/", name="company")
      */
-    public function index(EmailRepository $rep,InventoryRepository $repo, LicenceRepository $repoo, TransactionRepository $repooo,ProductRepository $repoooo): Response
+    public function index(UserRepository $re,EmailRepository $rep,InventoryRepository $repo, LicenceRepository $repoo, TransactionRepository $repooo,ProductRepository $repoooo): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $Inventorys = $repo->findOldItems();
+        $inventorys = $repo->findAll();
+        $Users = $re->findAll();
         $Licences = $repoo->findOldLicences();
         $Transactions=$repooo->findRecentTransactions();
+        
+        $transactions=$repooo->findAll();
         $Products=$repoooo->findLowQuality();
+        
+        $products=$repoooo->findAll();
         $Emails=$rep->findNewReports();
         return $this->render('company/index.html.twig', [
             'controller_name' => 'CompanyController',
             'inventorys' => $Inventorys,
             'licences' => $Licences,
             'transactions'=>$Transactions,
+            
+            'Transactions'=>$transactions,
             'products'=>$Products,
-           'emails'=>$Emails
+            'Products'=>$products,
+           'emails'=>$Emails,
+           'Inventorys' => $inventorys,
+           'User'=>$Users
         ]);
     }
     /**
@@ -100,8 +115,12 @@ public function usersList(TransactionRepository $rep,UserRepository $repo,Reques
      * @Route("/company/licence", name="company_licence")
      */
     public function licence(LicenceRepository $repo,Request $request,PaginatorInterface $paginator ){
-       
-        $Data = $repo->findAll();
+        $search= new LicenceSearch();
+        //filter form
+        $form=$this->createForm(LicenceSearchType::class,$search);
+        $form->handleRequest($request);
+ 
+         $Data = $repo->findAllVisibleQuery($search);
         $Licences=$paginator->paginate(
      $Data,
      $request->query->getInt('page',1),
@@ -111,7 +130,9 @@ public function usersList(TransactionRepository $rep,UserRepository $repo,Reques
         );
         return $this->render('company/licence.html.twig', [
             'controller_name' => 'CompanyController',
-            'licences'=> $Licences
+            'licences'=> $Licences,
+            
+            'form'=> $form->createView()
         ]);
     }
     
@@ -173,8 +194,12 @@ public function usersList(TransactionRepository $rep,UserRepository $repo,Reques
      * @Route("/company/product", name="company_product")
      */
     public function product(ProductRepository $repo,Request $request,PaginatorInterface $paginator ){
-       
-        $Data = $repo->findAll();
+       $search= new PropertySearch();
+       //filter form
+       $form=$this->createForm(PropertySearchType::class,$search);
+       $form->handleRequest($request);
+
+        $Data = $repo->findAllVisibleQuery($search);
         $Products=$paginator->paginate(
      $Data,
      $request->query->getInt('page',1),
@@ -184,7 +209,8 @@ public function usersList(TransactionRepository $rep,UserRepository $repo,Reques
         );
         return $this->render('company/product.html.twig', [
             'controller_name' => 'CompanyController',
-            'products'=> $Products
+            'products'=> $Products,
+            'form'=> $form->createView()
         ]);
     }
 /**

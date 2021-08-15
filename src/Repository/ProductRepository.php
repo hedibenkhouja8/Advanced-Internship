@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Product;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+
+use App\Entity\PropertySearch;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,7 +21,40 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
+  
+ 
+    /**
+     * @return Product[]
+     */
+    public function findAllVisibleQuery(PropertySearch $search)
+    {
+        
+     //   $entityManager = $this->getEntityManager();
+//$k = $entityManager->createQuery('SELECT count(transactions)  FROM App\Entity\Products ');
 
+        $qb = $this->createQueryBuilder('p');
+        if($search->getminQuantity()){
+            $qb =$qb
+                ->andwhere('p.quantity >= :minQuantity')
+                ->setParameter('minQuantity',$search->getminQuantity());
+
+        }
+        if($search->getmanufacturer()){
+            $qb =$qb
+                ->andwhere('p.manufacturer LIKE :manufacturer')
+                ->setParameter('manufacturer',$search->getmanufacturer());
+
+        }
+        if($search->getstockingarea()){
+            $qb =$qb
+                ->andwhere('p.stocking_area LIKE :stockingarea')
+                ->setParameter('stockingarea',$search->getstockingarea());
+
+        }
+           $query=$qb->getQuery();
+           return $query->execute();
+                        
+    }
     /**
      * @return Product[] Returns an array of Product objects
      */

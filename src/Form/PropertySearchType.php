@@ -2,18 +2,18 @@
 
 namespace App\Form;
 
-use App\Entity\Product;
+use App\Entity\PropertySearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-class ProductType extends AbstractType
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+
+class PropertySearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('reference')
-            ->add('description')
             ->add('manufacturer', ChoiceType::class, [
                 'choices'  => [
                     'Mechanic Depatrtment' => 'Mechanic Depatrtment',
@@ -21,23 +21,37 @@ class ProductType extends AbstractType
                     'IT department' => 'IT department ',
                 ],
             ])
-            ->add('quantity')
-            ->add('stocking_area', ChoiceType::class, [
+            ->add('stockingarea', ChoiceType::class, [
                 'choices'  => [
                     'Main Warehouse' => 'Main Warehouse',
                     'Backyard Warehouse' => 'Backyard Warehouse',
                     'IT department Warehouse' => 'IT department Warehouse',
                     'Mechanics Department Warehouse' => 'Mechanics Department Warehouse',
                 ],
+                
+                'label'=> 'Stocking Area',
             ])
-        
+            ->add('minQuantity',IntegerType::class,[
+                'required'=> false,
+                'label'=> 'Minimum Quantity',
+                'attr' =>['Placeholder'=>'Minimum Quantity']
+
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Product::class,
+            'data_class' => PropertySearch::class,
+            'method' => 'get',
+            'csrf_protection' => false
         ]);
+    }
+
+
+    public function getPrefix(){
+
+        return '';
     }
 }

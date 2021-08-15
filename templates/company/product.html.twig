@@ -8,8 +8,31 @@ th,h2{color:#485785}
 .b{padding-left:400px;}
 </style><section id="main-content">
 	<section class="wrapper">
-		<div class="table-agile-info">  <a href="{{path("product_new")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add a Product</a>
-<br><br><br>
+		<div class="table-agile-info">
+   
+    <h2>These are your storage products:</h2>
+      <a href="{{path("product_new")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add a Product</a>
+<br><br><br> {{form_start(form)}}
+
+    <div class="form-row align-items-end">
+    <div class="col-sm">
+      {{form_row(form.stockingarea)}}
+    </div>
+    <div class="col-sm">
+      {{form_row(form.manufacturer)}}
+    </div>
+    <div class="col-sm">
+      {{form_row(form.minQuantity)}}
+    </div><div class="form-group">
+    <button class=" btn search">
+                        <i class="fa fa-search"></i></button>
+    
+     {{form_end(form)}}
+     
+    
+    <a class="btn search" href='/company/product'>
+                        <i class="fa fa-redo"></i></button></a></div>
+ </div>
  <div class="panel panel-default">
     <div class="panel-heading">
      Storage
@@ -32,6 +55,8 @@ th,h2{color:#485785}
       
        <th scope="col">Manufacturer</th>
       <th scope="col">Quantity</th>
+      
+       <th scope="col">Transactions</th>
        <th scope="col">Description</th>
        <th scope="col">Actions</th>
           </tr>
@@ -46,6 +71,8 @@ th,h2{color:#485785}
      
     
         <td>{{product.quantity}}</td>
+        
+        <td>{{product.transactions|length}}</td>
       <td>{{product.description}}</td>
       
        <td> <a href="{{path('product_show',{'id':product.id})}}"><i class="far fa-eye"></i></a>

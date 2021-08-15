@@ -45,8 +45,29 @@ th,h2{color:#485785}
 			</div>
 		</div><div class="col-md-6 w3agile-notifications">
 			<div class="notifications">
-				<!--notification start-->
-				
+				<!--notification start--><div class="container">
+        <h3>Info</h3>
+  <div class="row">
+    <div class="col">
+                        <i class="fa fa-history i"></i>
+   Transactions:{{Transactions|length}}<br><br>
+   
+                        <i class="fa fa-boxes i"></i>
+   Inventory Items:{{Inventorys|length}}
+    </div>
+    <div class="col">
+                        <i class="fa fa-box-open i"></i>
+     Products:{{Products|length}}
+     <br><br>
+   
+                        <i class="fa fa-users i"></i>
+   Users:{{User|length}}
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+</div><br>
 					<header class="panel-heading">
 					Recent Reports
 					</header>{% for email in emails %}
