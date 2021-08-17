@@ -15,13 +15,14 @@ class LicenceSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user', TextType::class)
+            ->add('user', TextType::class, array('required' => false))
             ->add('compilancetype', ChoiceType::class, [
                 'choices'  => [
+                    ''=>'',
                     'Pro' => 'Pro',
                     'Normal' => 'Normal',
                   
-                ],
+                ],'required'=> false,
             ])
         ;
     }

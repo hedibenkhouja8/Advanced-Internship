@@ -12,7 +12,31 @@ th,h2{color:#485785}
     
     <h2>These are your inventory items :</h2>
     <a href="{{path("inventory_new")}}" class="btn btn-outline-info btn-lg float-right" ><i class="fas fa-user-plus"></i>Add Equipement to your inventory</a>
-<br><br><br>
+<br><br><br>{{form_start(form)}}
+
+    <div class="form-row align-items-end">
+    <div class="col-sm">
+      {{form_row(form.location,{'attr':{'placeholder':'Location'}})}}
+    </div>
+    <div class="col-sm">
+      {{form_row(form.operatingsystem)}}
+    </div>
+    <div class="col-sm">
+      {{form_row(form.state)}}
+    </div>
+    <div class="col-sm">
+      {{form_row(form.brand)}}
+    </div>
+    <div class="form-group">
+    <button class=" btn search">
+                        <i class="fa fa-search"></i></button>
+    
+     {{form_end(form)}}
+     
+    
+    <a class="btn search" href='/company/inventory'>
+                        <i class="fa fa-redo"></i></button></a></div>
+ </div>
  <div class="panel panel-default">
     <div class="panel-heading">
      Inventory

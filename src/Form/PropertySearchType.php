@@ -16,13 +16,16 @@ class PropertySearchType extends AbstractType
         $builder
             ->add('manufacturer', ChoiceType::class, [
                 'choices'  => [
+                    ''=>'',
                     'Mechanic Depatrtment' => 'Mechanic Depatrtment',
                     'Chemics Department' => 'Chemics Department',
                     'IT department' => 'IT department ',
                 ],
+                'required'=> false,
             ])
             ->add('stockingarea', ChoiceType::class, [
                 'choices'  => [
+                    ''=>'',
                     'Main Warehouse' => 'Main Warehouse',
                     'Backyard Warehouse' => 'Backyard Warehouse',
                     'IT department Warehouse' => 'IT department Warehouse',
@@ -30,6 +33,7 @@ class PropertySearchType extends AbstractType
                 ],
                 
                 'label'=> 'Stocking Area',
+                'required'=> false,
             ])
             ->add('minQuantity',IntegerType::class,[
                 'required'=> false,

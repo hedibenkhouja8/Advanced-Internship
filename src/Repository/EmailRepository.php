@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Email;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\EmailSearch;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Email|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,6 +20,27 @@ class EmailRepository extends ServiceEntityRepository
         parent::__construct($registry, Email::class);
     }
 
+    /**
+      * @return Email[] Returns an array of Email objects
+      */
+      public function findAllVisibleQuery(EmailSearch $search)
+      {
+          
+  
+          $qb = $this->createQueryBuilder('l');
+          if($search->getemail()){
+              $qb =$qb
+                  ->andwhere('l.Email LIKE :email')
+                  ->setParameter('email','%'.$search->getemail().'%');
+  
+          }
+       
+         
+             $query=$qb->getQuery();
+             return $query->execute();
+                          
+      }
+  
     /**
       * @return Email[] Returns an array of Email objects
       */

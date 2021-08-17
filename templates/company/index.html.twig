@@ -178,7 +178,11 @@ th,h2{color:#485785}
 <i class="fas fa-box-open fa-2x "></i>    <strong class="card-title">Reference : {{product.reference}}   </strong>
 <!--    <p class="card-text">  Stocking Area:{{product.StockingArea}}</p>-->
     <p class="card-text">Manufacturer  :{{product.manufacturer}}</p>
-    <p class="card-text">Quantity: {{product.quantity}} </p> <br>
+    {% if product.quantity == 0 %}
+
+    <p class="card-text" style="color:red;">Quantity: {{product.quantity}} </p> <br>
+    {% else %}
+    <p class="card-text">Quantity: {{product.quantity}} </p> <br>{% endif %}
     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{path('product_edit',{'id':product.id})}}"  ><i class="fas fa-edit fa-2x"></i></a>
 
    </p>

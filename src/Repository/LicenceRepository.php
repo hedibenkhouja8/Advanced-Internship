@@ -26,8 +26,6 @@ class LicenceRepository extends ServiceEntityRepository
     public function findAllVisibleQuery(LicenceSearch $search)
     {
         
-     //   $entityManager = $this->getEntityManager();
-//$k = $entityManager->createQuery('SELECT count(transactions)  FROM App\Entity\Products ');
 
         $qb = $this->createQueryBuilder('l');
         if($search->getuser()){

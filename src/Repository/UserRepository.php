@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\UserSearch;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,9 +21,27 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
+     /**
+      * @return User[] Returns an array of User objects
+      */
+      
+    public function findAllVisibleQuery(UserSearch $search)
+    {
+        
+
+        $qb = $this->createQueryBuilder('l');
+        if($search->getuser()){
+            $qb =$qb
+                ->andwhere('l.username LIKE :user')
+                ->setParameter('user','%'.$search->getuser().'%');
+
+        }
+      
+       
+           $query=$qb->getQuery();
+           return $query->execute();
+                        
+    }
     /*
     public function findByExampleField($value)
     {

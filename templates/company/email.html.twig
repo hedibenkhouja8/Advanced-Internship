@@ -19,11 +19,23 @@ padding-right:400px;}
 		<div class="table-agile-info2">
    
      <h2>Inbox</h2>
-      <br><form method="POST">
-<input type="text" name="name">
-<input type="button" value="search"/>
+      <br><br>{{form_start(form)}}
 
-</form>
+    <div class="form-row align-items-end">
+    <div class="col-sm">
+      {{form_row(form.email)}}
+    </div>
+    
+    <div class="form-group">
+    <button class=" btn search">
+                        <i class="fa fa-search"></i></button>
+    
+     {{form_end(form)}}
+     
+    
+    <a class="btn search" href='/company/email'>
+                        <i class="fa fa-redo"></i></button></a></div>
+ </div>
  <div class="table-inbox-wrap ">
                             <table class="table table-inbox table-hover">
                                <thead>

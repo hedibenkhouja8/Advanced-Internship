@@ -61,7 +61,7 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Email::class, mappedBy="user")
      */
     private $emails;
-
+  
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -71,6 +71,8 @@ class User implements UserInterface
     {
         return $this->id;
     }
+  
+ 
 
     public function getEmail(): ?string
     {

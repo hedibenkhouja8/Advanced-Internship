@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Inventory;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\InventorySearch;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Inventory|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,44 @@ class InventoryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Inventory::class);
+    }
+
+ /**
+     * @return Inventory[] Returns an array of Inventory objects
+     */
+
+    public function findAllVisibleQuery(InventorySearch $search)
+    {
+        
+
+        $qb = $this->createQueryBuilder('l');
+        if($search->getlocation()){
+            $qb =$qb
+                ->andwhere('l.Locaation LIKE :location')
+                ->setParameter('location','%'.$search->getlocation().'%');
+
+        }
+        if($search->getoperatingsystem()){
+            $qb =$qb
+                ->andwhere('l.OperatingSystem LIKE :operatingsystem')
+                ->setParameter('operatingsystem',$search->getoperatingsystem());
+
+        }
+        if($search->getstate()){
+            $qb =$qb
+                ->andwhere('l.State LIKE :state')
+                ->setParameter('state',$search->getstate());
+
+        }
+        if($search->getbrand()){
+            $qb =$qb
+                ->andwhere('l.Brand LIKE :brand')
+                ->setParameter('brand',$search->getbrand());
+
+        }
+           $query=$qb->getQuery();
+           return $query->execute();
+                        
     }
 
  /**
